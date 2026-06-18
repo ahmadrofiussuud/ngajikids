@@ -103,7 +103,6 @@ export default function LandingPage() {
             <a href="#cara-kerja" className="hover:text-primary-dark transition-colors">Cara Kerja</a>
             <a href="#harga" className="hover:text-primary-dark transition-colors">Harga</a>
             <a href="#faq" className="hover:text-primary-dark transition-colors">FAQ</a>
-            <Link href="/contoh" className="hover:text-primary-dark transition-colors">Contoh</Link>
           </nav>
 
           <Link
