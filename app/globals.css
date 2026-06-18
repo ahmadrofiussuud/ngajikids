@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #10B981;
+  --color-primary-light: #D1FAE5;
+  --color-primary-dark: #065F46;
+  
+  --color-secondary: #F59E0B;
+  --color-secondary-light: #FEF3C7;
+  --color-secondary-dark: #B45309;
+  
+  --color-accent: #8B5CF6;
+  --color-accent-light: #EDE9FE;
+  --color-accent-dark: #6D28D9;
+  
+  --color-danger: #F87171;
+  --color-danger-light: #FEE2E2;
+  --color-danger-dark: #B91C1C;
+  
+  --color-neutral-warm: #FAF9F6;
+  --color-neutral-card: #FFFDF9;
+  --color-neutral-border: #EAE6DF;
+  
+  --font-nunito: var(--font-nunito), sans-serif;
+  --font-amiri: var(--font-amiri), serif;
+}
+
+:root {
+  --background: #FAF9F6;
+  --foreground: #1F2937;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-nunito), sans-serif;
+  min-height: 100vh;
+}
+
+/* Base custom classes */
+.arabic-text {
+  font-family: var(--font-amiri), serif;
+}
+
+.bg-islamic-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%2310b981' stroke-width='0.5' stroke-opacity='0.06'%3E%3Cpath d='M40 0 L80 40 L40 80 L0 40 Z'/%3E%3Cpath d='M0 0 L80 80 M80 0 L0 80'/%3E%3Ccircle cx='40' cy='40' r='10' stroke='%23f59e0b' stroke-opacity='0.08'/%3E%3Ccircle cx='40' cy='40' r='20'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Fun kid-themed scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF9F6;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb {
+  background: #D1FAE5;
+  border: 2px solid #FAF9F6;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #10B981;
+}
