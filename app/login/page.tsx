@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, CheckCircle2, ChevronRight } from "lucide-react";
+import { Sparkles, CheckCircle2, ChevronRight, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useStore, UserRole } from "@/lib/store";
 import AvatarKid from "@/components/ui/AvatarKid";
 
@@ -95,6 +96,15 @@ export default function LoginPage() {
         {/* Decorative Top Sunbeams */}
         <div className="absolute -top-12 -left-12 w-28 h-28 bg-primary-light/30 rounded-full filter blur-xl" />
         <div className="absolute -top-12 -right-12 w-28 h-28 bg-secondary-light/30 rounded-full filter blur-xl" />
+
+        {/* Close Button to return to landing page */}
+        <Link
+          href="/"
+          className="absolute top-6 right-6 bg-gray-50 hover:bg-gray-100 text-gray-400 p-2 rounded-full border border-gray-150 transition-colors z-20"
+          title="Kembali ke Beranda"
+        >
+          <X size={16} className="stroke-[3]" />
+        </Link>
 
         {/* Brand Logo & Greeting */}
         <div className="flex flex-col items-center text-center mb-6 relative z-10">
