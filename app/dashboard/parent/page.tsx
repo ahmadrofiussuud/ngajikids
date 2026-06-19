@@ -13,6 +13,7 @@ import {
   AlertCircle,
   MessageSquare,
   ChevronRight,
+  ChevronDown,
   TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
@@ -96,12 +97,6 @@ export default function ParentDashboard() {
       <header className="sticky top-0 z-40 bg-white/95 border-b-3 border-neutral-border py-4 px-6 shadow-sm">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link
-              href="/"
-              className="bg-gray-50 hover:bg-gray-150 p-2.5 rounded-2xl transition-colors border border-neutral-border text-gray-500"
-            >
-              <ArrowLeft size={16} className="stroke-[3]" />
-            </Link>
             <div>
               <h1 className="font-extrabold text-xl sm:text-2xl text-gray-800 tracking-tight">
                 Portal Orang Tua 👩‍👦
@@ -113,17 +108,26 @@ export default function ParentDashboard() {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="bg-primary/10 text-primary-dark font-extrabold text-xs px-3.5 py-1.5 rounded-full border border-primary/20">
-              AI Insight Aktif
-            </span>
+            <Link
+              href="/dashboard/parent/insights"
+              className="bg-primary/10 hover:bg-primary/25 text-primary-dark font-extrabold text-xs px-3.5 py-1.5 rounded-full border border-primary/20 hover:border-primary/45 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
+              title="Lihat Analisis Detail & Diagnosis AI"
+            >
+              <span>AI Insight Aktif</span>
+              <TrendingUp size={12} className="stroke-[2.5]" />
+            </Link>
 
-            {/* Login / Switch Account Dropdown Button */}
+            {/* Profile Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setLoginOpen(!loginOpen)}
-                className="bg-primary hover:bg-primary-dark text-white font-extrabold text-xs py-2.5 px-3.5 rounded-xl border-b-2 border-primary-dark flex items-center gap-1.5 active:translate-y-[1px] transition-all"
+                className="flex items-center gap-2 hover:bg-gray-50 p-1.5 rounded-2xl border-2 border-neutral-border hover:border-gray-300 transition-all active:scale-95 bg-white"
               >
-                <span>Pindah Akun 🔑</span>
+                <div className="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-black text-sm">
+                  👩‍👦
+                </div>
+                <span className="text-xs font-black text-gray-700 hidden sm:inline">Orang Tua</span>
+                <ChevronDown size={14} className="text-gray-400" />
               </button>
               
               <AnimatePresence>
@@ -138,18 +142,19 @@ export default function ParentDashboard() {
                       className="absolute right-0 mt-2 w-48 bg-white border-3 border-neutral-border rounded-2xl shadow-lg py-2 z-50 flex flex-col text-left font-nunito"
                     >
                       <Link
-                        href="/dashboard"
+                        href="/dashboard/parent/profile"
                         onClick={() => setLoginOpen(false)}
-                        className="w-full text-left px-4 py-2.5 text-xs font-black text-gray-700 hover:bg-gray-50 border-b border-gray-100"
+                        className="w-full text-left px-4 py-2.5 text-xs font-black text-gray-700 hover:bg-gray-50 border-b border-gray-100 flex items-center gap-2"
                       >
-                        👦 Masuk sebagai Siswa
+                        <span>👩‍👦</span> Profil Orang Tua
                       </Link>
-                      <button
+                      <Link
+                        href="/login"
                         onClick={() => setLoginOpen(false)}
-                        className="w-full text-left px-4 py-2.5 text-xs font-black text-gray-700 hover:bg-gray-50"
+                        className="w-full text-left px-4 py-2.5 text-xs font-black text-red-500 hover:bg-red-50 flex items-center gap-2"
                       >
-                        👩‍👦 Masuk sebagai Orangtua
-                      </button>
+                        <span>🚪</span> Keluar
+                      </Link>
                     </motion.div>
                   </>
                 )}

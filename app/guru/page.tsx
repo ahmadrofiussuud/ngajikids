@@ -17,6 +17,7 @@ import {
   Plus,
   Send,
   X,
+  ChevronDown,
 } from "lucide-react";
 import Link from "next/link";
 import { generateAIPath, StudentProfile, AssessmentInput, LearningPathOutput } from "@/lib/ai/learningPath";
@@ -28,9 +29,13 @@ interface Student {
   streak: number;
   lastSessionScore: number;
   notes: string;
+  weakPoints: string[];
+  gmeetJoined: number;
+  gmeetTotal: number;
+  lastSessionStatus: "hadir" | "bolos";
 }
 
-const mockStudents: Student[] = [
+const initialStudents: Student[] = [
   {
     id: "child_1",
     name: "Ahmad Fatih",
@@ -38,6 +43,10 @@ const mockStudents: Student[] = [
     streak: 7,
     lastSessionScore: 88,
     notes: "Fokus membaca sangat baik, perlu bimbingan tajwid dasar.",
+    weakPoints: ["Qalqalah (Bouncing)", "Makhraj Huruf Qof"],
+    gmeetJoined: 12,
+    gmeetTotal: 15,
+    lastSessionStatus: "hadir",
   },
   {
     id: "child_2",
@@ -46,6 +55,10 @@ const mockStudents: Student[] = [
     streak: 3,
     lastSessionScore: 80,
     notes: "Lancar di halaman 15, sedang melatih sambung huruf.",
+    weakPoints: ["Huruf Sambung", "Fathatain"],
+    gmeetJoined: 9,
+    gmeetTotal: 12,
+    lastSessionStatus: "hadir",
   },
   {
     id: "child_3",
@@ -54,12 +67,58 @@ const mockStudents: Student[] = [
     streak: 0,
     lastSessionScore: 65,
     notes: "Mulai melatih makhraj huruf Kho dan Jim.",
+    weakPoints: ["Makhraj Huruf Kho", "Makhraj Huruf Jim"],
+    gmeetJoined: 5,
+    gmeetTotal: 10,
+    lastSessionStatus: "hadir",
   },
 ];
 
 export default function TeacherPortal() {
   const [loginOpen, setLoginOpen] = useState(false);
+  const [students, setStudents] = useState<Student[]>(initialStudents);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+
+  const toggleAttendance = (studentId: string) => {
+    setStudents((prev) =>
+      prev.map((s) => {
+        if (s.id === studentId) {
+          const nextStatus = s.lastSessionStatus === "hadir" ? "bolos" : "hadir";
+          const joinedDiff = nextStatus === "bolos" ? -1 : 1;
+          return {
+            ...s,
+            lastSessionStatus: nextStatus,
+            gmeetJoined: Math.max(0, Math.min(s.gmeetTotal, s.gmeetJoined + joinedDiff)),
+          };
+        }
+        return s;
+      })
+    );
+
+    // Sync with selected student if currently viewing their report form
+    setSelectedStudent((prev) => {
+      if (prev && prev.id === studentId) {
+        const nextStatus = prev.lastSessionStatus === "hadir" ? "bolos" : "hadir";
+        const joinedDiff = nextStatus === "bolos" ? -1 : 1;
+        return {
+          ...prev,
+          lastSessionStatus: nextStatus,
+          gmeetJoined: Math.max(0, Math.min(prev.gmeetTotal, prev.gmeetJoined + joinedDiff)),
+        };
+      }
+      return prev;
+    });
+  };
+
+  const calculateAIWeight = (student: Student) => {
+    const attendanceRate = student.gmeetTotal > 0 ? (student.gmeetJoined / student.gmeetTotal) * 100 : 0;
+    // Evaluation score counts for 70%, attendance rate counts for 30%
+    let weight = (student.lastSessionScore * 0.7) + (attendanceRate * 0.3);
+    if (student.lastSessionStatus === "bolos") {
+      weight -= 15; // Apply attendance penalty
+    }
+    return Math.max(0, Math.min(100, parseFloat(weight.toFixed(1))));
+  };
   
   // Form States for Lesson Report
   const [material, setMaterial] = useState("Iqra 3 Halaman 12");
@@ -212,15 +271,27 @@ export default function TeacherPortal() {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Login / Switch Account Dropdown Button */}
+            <Link
+              href="/guru/schedule"
+              className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-extrabold text-xs px-3.5 py-1.5 rounded-xl border border-emerald-250 hover:border-emerald-350 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
+              title="Lihat Kalender Jadwal & Booking Kelas"
+            >
+              <span>Jadwal Kelas 📅</span>
+            </Link>
+
+            {/* Profile Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setLoginOpen(!loginOpen)}
-                className="bg-primary hover:bg-primary-dark text-white font-extrabold text-xs py-2.5 px-3.5 rounded-xl border-b-2 border-primary-dark flex items-center gap-1.5 active:translate-y-[1px] transition-all"
+                className="flex items-center gap-2 hover:bg-gray-50 p-1.5 rounded-2xl border-2 border-neutral-border hover:border-gray-300 transition-all active:scale-95 bg-white"
               >
-                <span>Pindah Akun 🔑</span>
+                <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-sm">
+                  🎓
+                </div>
+                <span className="text-xs font-black text-gray-700 hidden sm:inline">Ustadz Riza</span>
+                <ChevronDown size={14} className="text-gray-400" />
               </button>
-
+              
               <AnimatePresence>
                 {loginOpen && (
                   <>
@@ -233,25 +304,19 @@ export default function TeacherPortal() {
                       className="absolute right-0 mt-2 w-48 bg-white border-3 border-neutral-border rounded-2xl shadow-lg py-2 z-50 flex flex-col text-left font-nunito"
                     >
                       <Link
-                        href="/dashboard"
+                        href="/guru/profile"
                         onClick={() => setLoginOpen(false)}
-                        className="w-full text-left px-4 py-2.5 text-xs font-black text-gray-700 hover:bg-gray-50 border-b border-gray-100"
+                        className="w-full text-left px-4 py-2.5 text-xs font-black text-gray-700 hover:bg-gray-50 border-b border-gray-100 flex items-center gap-2"
                       >
-                        👦 Masuk sebagai Siswa
+                        <span>🎓</span> Profil Ustadz
                       </Link>
                       <Link
-                        href="/dashboard/parent"
+                        href="/login"
                         onClick={() => setLoginOpen(false)}
-                        className="w-full text-left px-4 py-2.5 text-xs font-black text-gray-700 hover:bg-gray-50 border-b border-gray-100"
+                        className="w-full text-left px-4 py-2.5 text-xs font-black text-red-500 hover:bg-red-50 flex items-center gap-2"
                       >
-                        👩‍👦 Masuk sebagai Orangtua
+                        <span>🚪</span> Keluar
                       </Link>
-                      <button
-                        onClick={() => setLoginOpen(false)}
-                        className="w-full text-left px-4 py-2.5 text-xs font-black text-gray-700 hover:bg-gray-50"
-                      >
-                        🎓 Masuk sebagai Guru
-                      </button>
                     </motion.div>
                   </>
                 )}
@@ -273,39 +338,121 @@ export default function TeacherPortal() {
             </h2>
 
             <div className="flex flex-col gap-3">
-              {mockStudents.map((student) => (
-                <div
-                  key={student.id}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50/50 rounded-2xl border border-gray-150 gap-4"
-                >
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-12 h-12 rounded-full border-2 border-primary bg-primary-light flex items-center justify-center text-primary-dark font-black text-lg select-none">
-                      {student.name.charAt(0)}
+              {students.map((student) => {
+                const attendanceRate = student.gmeetTotal > 0 ? (student.gmeetJoined / student.gmeetTotal) * 100 : 0;
+                const aiWeight = calculateAIWeight(student);
+                
+                return (
+                  <div
+                    key={student.id}
+                    className="flex flex-col p-5 bg-white rounded-3xl border-3 border-neutral-border gap-4 shadow-sm relative overflow-hidden"
+                  >
+                    {/* Top indicator line for attendance status */}
+                    <div className={`absolute top-0 left-0 right-0 h-1.5 ${student.lastSessionStatus === "hadir" ? "bg-primary" : "bg-red-500 animate-pulse"}`} />
+
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      {/* Left: profile & basic info */}
+                      <div className="flex items-center gap-3.5">
+                        <div className="w-12 h-12 rounded-full border-2 border-primary bg-primary-light flex items-center justify-center text-primary-dark font-black text-lg select-none">
+                          {student.name.charAt(0)}
+                        </div>
+                        <div>
+                          <h3 className="font-extrabold text-base text-gray-800 flex items-center gap-2">
+                            {student.name}
+                            <span className="text-[10px] bg-secondary-light text-secondary-dark font-black px-2 py-0.5 rounded-full border border-secondary/20 uppercase">
+                              {student.level}
+                            </span>
+                          </h3>
+                          <div className="flex flex-wrap items-center gap-2 mt-1">
+                            <span className="text-xs font-bold text-gray-400">
+                              Streak: 🔥 {student.streak} Hari
+                            </span>
+                            <span className="text-gray-200 text-[10px]">•</span>
+                            <span className="text-xs font-extrabold text-gray-500 bg-neutral-warm/30 px-2.5 py-0.5 rounded-md border border-neutral-border">
+                              Pencapaian: {student.level === "iqro3" ? "Iqra 3 (Lvl 3)" : student.level === "iqro2" ? "Iqra 2 (Lvl 2)" : "Iqra 1 (Lvl 1)"}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Right: action buttons */}
+                      <div className="flex items-center gap-2 self-start sm:self-center">
+                        <button
+                          type="button"
+                          onClick={() => toggleAttendance(student.id)}
+                          className={`font-black text-xs py-2 px-3 rounded-xl border-b-2 transition-all flex items-center gap-1 active:border-b-0 active:translate-y-[1px] ${
+                            student.lastSessionStatus === "hadir"
+                              ? "bg-red-50 hover:bg-red-100 text-red-500 border-red-200"
+                              : "bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border-emerald-200"
+                          }`}
+                          title="Tandai Kehadiran Santri kemarin"
+                        >
+                          {student.lastSessionStatus === "hadir" ? "Mark Bolos ❌" : "Mark Hadir ✅"}
+                        </button>
+                        
+                        <button
+                          type="button"
+                          onClick={() => handleOpenReportForm(student)}
+                          className="bg-primary hover:bg-primary-dark text-white font-extrabold text-xs py-2 px-3 rounded-xl border-b-2 border-primary-dark active:border-b-0 active:translate-y-[1px] transition-all flex items-center gap-1"
+                        >
+                          <FileText size={14} />
+                          Buat Laporan
+                        </button>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-extrabold text-base text-gray-800">{student.name}</h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-[10px] bg-secondary-light text-secondary-dark font-black px-2 py-0.5 rounded-full border border-secondary/20 uppercase">
-                          {student.level}
-                        </span>
-                        <span className="text-xs font-bold text-gray-400">
-                          Streak: 🔥 {student.streak} Hari
-                        </span>
+
+                    {/* Middle: Focus Area (Weak points), Attendance tracker rate, and AI Weight Score */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-3.5 border-t border-neutral-border mt-1">
+                      {/* Weak points */}
+                      <div className="flex flex-col gap-1">
+                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-wider">Fokus Perbaikan (Salah)</span>
+                        <div className="flex flex-wrap gap-1 mt-1.5">
+                          {student.weakPoints.map((wp) => (
+                            <span key={wp} className="text-[10px] bg-amber-50 text-secondary-dark border border-secondary/20 px-2 py-0.5 rounded-lg font-bold">
+                              ⚠️ {wp}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Attendance logs */}
+                      <div className="flex flex-col gap-1">
+                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-wider">Kehadiran GMeet</span>
+                        <div className="flex items-center gap-2 mt-1.5">
+                          <div className="flex-grow bg-gray-100 h-2.5 rounded-full overflow-hidden border border-gray-200 relative">
+                            <div
+                              className={`h-full transition-all duration-500 rounded-full ${student.lastSessionStatus === "hadir" ? "bg-primary" : "bg-amber-500"}`}
+                              style={{ width: `${attendanceRate}%` }}
+                            />
+                          </div>
+                          <span className="text-xs font-black text-gray-700 min-w-[65px] text-right">
+                            {student.gmeetJoined}/{student.gmeetTotal} ({attendanceRate.toFixed(0)}%)
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* AI weight */}
+                      <div className="flex flex-col gap-1">
+                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-wider">Bobot Penilaian AI</span>
+                        <div className="flex items-center gap-2 mt-1.5">
+                          <span className={`text-base font-black tracking-tight ${student.lastSessionStatus === "hadir" ? "text-primary-dark" : "text-red-500 font-black animate-pulse"}`}>
+                            {aiWeight}%
+                          </span>
+                          {student.lastSessionStatus === "hadir" ? (
+                            <span className="text-[8px] bg-emerald-50 text-primary-dark font-black px-1.5 py-0.5 rounded border border-primary/20">
+                              OPTIMAL
+                            </span>
+                          ) : (
+                            <span className="text-[8px] bg-red-50 text-red-500 font-black px-1.5 py-0.5 rounded border border-red-200 animate-bounce">
+                              ⚠️ PENALTI BOLOS -15%
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
-
-                  <div className="flex items-center gap-2 self-start sm:self-center">
-                    <button
-                      onClick={() => handleOpenReportForm(student)}
-                      className="bg-primary hover:bg-primary-dark text-white font-extrabold text-xs py-2.5 px-4 rounded-xl border-b-2 border-primary-dark active:border-b-0 active:translate-y-[1px] transition-all flex items-center gap-1"
-                    >
-                      <FileText size={14} />
-                      Buat Laporan Sesi
-                    </button>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

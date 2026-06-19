@@ -2,48 +2,23 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Sparkles,
-  Mail,
-  Lock,
-  ArrowRight,
-  ShieldAlert,
-  CheckCircle2,
-  BookOpen,
-} from "lucide-react";
+import { Sparkles, CheckCircle2, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { useStore, UserRole } from "@/lib/store";
+import AvatarKid from "@/components/ui/AvatarKid";
 
 export default function LoginPage() {
   const router = useRouter();
   const setUser = useStore((state) => state.setUser);
   const setRole = useStore((state) => state.setRole);
 
-  const [activeRole, setActiveRole] = useState<UserRole>("student");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
   const [success, setSuccess] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<UserRole | null>(null);
 
-  const handleLoginSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorMsg("");
+  const handleRoleSelect = (role: UserRole) => {
+    setSelectedRole(role);
     setLoading(true);
-
-    // Basic form validation
-    if (!email || !password) {
-      setErrorMsg("Email dan kata sandi wajib diisi!");
-      setLoading(false);
-      return;
-    }
-
-    if (password.length < 6) {
-      setErrorMsg("Kata sandi harus minimal 6 karakter!");
-      setLoading(false);
-      return;
-    }
 
     // Simulate login duration
     setTimeout(() => {
@@ -52,27 +27,62 @@ export default function LoginPage() {
 
       // Save user to Zustand state store
       setUser({
-        id: activeRole === "student" ? "child_1" : activeRole === "parent" ? "parent_1" : "teacher_1",
-        name: activeRole === "student" ? "Fatih" : activeRole === "parent" ? "Bunda Fatih" : "Ustadz Riza",
-        role: activeRole,
-        avatar: activeRole === "student" ? "star" : "default",
+        id: role === "student" ? "child_1" : role === "parent" ? "parent_1" : "teacher_1",
+        name: role === "student" ? "Fatih" : role === "parent" ? "Bunda Fatih" : "Ustadz Riza",
+        role: role,
+        avatar: role === "student" ? "star" : "default",
       });
-      setRole(activeRole);
+      setRole(role);
 
       // Redirect based on role
       setTimeout(() => {
-        if (activeRole === "student") {
+        if (role === "student") {
           router.push("/dashboard");
-        } else if (activeRole === "parent") {
+        } else if (role === "parent") {
           router.push("/dashboard/parent");
-        } else if (activeRole === "teacher") {
+        } else if (role === "teacher") {
           router.push("/guru");
         } else {
           router.push("/");
         }
       }, 1000);
-    }, 1500);
+    }, 1200);
   };
+
+  const roleCards = [
+    {
+      role: "student" as UserRole,
+      title: "Siswa 👦",
+      desc: "Masuk gerbang belajar seru, kumpulkan koin & lencana menarik!",
+      avatar: <AvatarKid character="star" size={54} animated />,
+      colorClass: "hover:bg-emerald-50/40 hover:border-emerald-500 border-neutral-border",
+      badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-200",
+    },
+    {
+      role: "parent" as UserRole,
+      title: "Orang Tua 👩‍👦",
+      desc: "Pantau kemajuan bacaan anak, absensi, & rekomendasi AI.",
+      avatar: (
+        <div className="w-14 h-14 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center font-black text-2xl border-2 border-purple-200 shadow-sm select-none">
+          👩‍👦
+        </div>
+      ),
+      colorClass: "hover:bg-purple-50/40 hover:border-purple-500 border-neutral-border",
+      badgeColor: "bg-purple-100 text-purple-800 border-purple-200",
+    },
+    {
+      role: "teacher" as UserRole,
+      title: "Guru Pengajar 🎓",
+      desc: "Kelola kelas bimbingan, jadwal tatap muka, & input laporan AI.",
+      avatar: (
+        <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center font-black text-2xl border-2 border-amber-250 shadow-sm select-none">
+          🎓
+        </div>
+      ),
+      colorClass: "hover:bg-amber-50/40 hover:border-amber-500 border-neutral-border",
+      badgeColor: "bg-amber-100 text-amber-800 border-amber-200",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-neutral-warm font-nunito flex items-center justify-center p-4 sm:p-6 select-none bg-islamic-pattern">
@@ -80,14 +90,14 @@ export default function LoginPage() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", stiffness: 100, damping: 15 }}
-        className="bg-white border-4 border-neutral-border rounded-[40px] p-8 max-w-md w-full shadow-2xl relative overflow-hidden"
+        className="bg-white border-4 border-neutral-border rounded-[40px] p-6 sm:p-8 max-w-lg w-full shadow-2xl relative overflow-hidden"
       >
         {/* Decorative Top Sunbeams */}
         <div className="absolute -top-12 -left-12 w-28 h-28 bg-primary-light/30 rounded-full filter blur-xl" />
         <div className="absolute -top-12 -right-12 w-28 h-28 bg-secondary-light/30 rounded-full filter blur-xl" />
 
         {/* Brand Logo & Greeting */}
-        <div className="flex flex-col items-center text-center mb-8 relative z-10">
+        <div className="flex flex-col items-center text-center mb-6 relative z-10">
           <div className="bg-primary p-2.5 rounded-2xl border-2 border-primary-dark shadow-sm mb-3">
             <Sparkles className="text-white w-6 h-6 animate-pulse" />
           </div>
@@ -99,14 +109,31 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Success Modal Simulation */}
+        {/* Loading / Success Overlays */}
         <AnimatePresence>
+          {loading && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-white/95 backdrop-blur-sm z-30 flex flex-col items-center justify-center p-6 text-center"
+            >
+              <div className="flex items-center gap-1.5 mb-3">
+                <span className="w-3.5 h-3.5 bg-primary rounded-full animate-bounce" />
+                <span className="w-3.5 h-3.5 bg-primary rounded-full animate-bounce delay-100" />
+                <span className="w-3.5 h-3.5 bg-primary rounded-full animate-bounce delay-200" />
+              </div>
+              <h2 className="text-lg font-black text-gray-700">Mempersiapkan Portal...</h2>
+              <p className="text-xs font-bold text-gray-400 mt-1">Sabar ya, halaman sedang dimuat ✨</p>
+            </motion.div>
+          )}
+
           {success && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-white/90 backdrop-blur-sm z-30 flex flex-col items-center justify-center p-6 text-center"
+              className="absolute inset-0 bg-white/95 backdrop-blur-sm z-30 flex flex-col items-center justify-center p-6 text-center"
             >
               <motion.div
                 initial={{ scale: 0.5 }}
@@ -118,131 +145,52 @@ export default function LoginPage() {
               </motion.div>
               <h2 className="text-2xl font-black text-gray-800">Berhasil Masuk! 🎉</h2>
               <p className="text-sm font-semibold text-gray-400 mt-1">
-                Menghubungkan ke dasbor dalam hitungan detik...
+                Menghubungkan ke dasbor {selectedRole === "student" ? "Siswa" : selectedRole === "parent" ? "Orang Tua" : "Ustadz"}...
               </p>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Role Selection Tabs */}
-        <div className="flex justify-between gap-1 bg-gray-100 p-1.5 rounded-2xl border-2 border-gray-200 mb-6 relative z-10">
-          {(["student", "parent", "teacher"] as UserRole[]).map((r) => (
+        {/* Roles Option Grid */}
+        <div className="flex flex-col gap-4 relative z-10">
+          <h3 className="text-xs font-black text-gray-400 tracking-wider text-center mb-1">
+            Pilih Akun Untuk Masuk:
+          </h3>
+
+          {roleCards.map((card) => (
             <button
-              key={r}
+              key={card.role}
               type="button"
-              onClick={() => {
-                setActiveRole(r);
-                setErrorMsg("");
-              }}
-              className={`flex-1 text-xs font-black py-2.5 px-2 rounded-xl capitalize transition-all duration-200 relative ${
-                activeRole === r
-                  ? "bg-white text-primary-dark shadow-sm border border-gray-200"
-                  : "text-gray-400 hover:text-gray-600"
-              }`}
+              onClick={() => handleRoleSelect(card.role)}
+              className={`w-full p-4 rounded-3xl border-3 text-left transition-all active:scale-[0.98] flex items-center justify-between gap-4 bg-white hover:shadow-md ${card.colorClass}`}
             >
-              {r === "student" ? "👦 Siswa" : r === "parent" ? "👩‍👦 Orangtua" : "🎓 Guru"}
+              <div className="flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  {card.avatar}
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-base text-gray-800 flex items-center gap-2">
+                    {card.title}
+                  </h4>
+                  <p className="text-xs font-semibold text-gray-400 mt-1 leading-relaxed max-w-[240px]">
+                    {card.desc}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex-shrink-0 bg-neutral-warm border border-neutral-border p-2 rounded-xl text-gray-400 group-hover:text-primary transition-colors">
+                <ChevronRight size={18} className="stroke-[3]" />
+              </div>
             </button>
           ))}
         </div>
 
-        {/* Error Message */}
-        <AnimatePresence>
-          {errorMsg && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="bg-red-50 border border-red-200 rounded-xl p-3.5 flex items-start gap-2 text-red-600 text-xs font-bold mb-4"
-            >
-              <ShieldAlert size={16} className="flex-shrink-0 mt-0.5" />
-              <span>{errorMsg}</span>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Footnote */}
+        <p className="text-[10px] font-semibold text-gray-400 mt-6 text-center relative z-10">
+          NgajiKidz Platform Belajar Al-Qur'an Anak Berbasis AI &amp; Gamifikasi.
+        </p>
 
-        {/* Credentials Form */}
-        <form onSubmit={handleLoginSubmit} className="flex flex-col gap-4 relative z-10">
-          {/* Email Input */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-black text-gray-500 uppercase tracking-wider pl-1">
-              Alamat Email
-            </label>
-            <div className="relative">
-              <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-gray-400">
-                <Mail size={18} />
-              </span>
-              <input
-                type="email"
-                placeholder="fatih@ngajikids.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full border-3 border-neutral-border rounded-2xl py-3 pl-10 pr-4 text-sm font-bold focus:outline-none focus:border-primary bg-neutral-warm/25 transition-colors"
-              />
-            </div>
-          </div>
-
-          {/* Password Input */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-black text-gray-500 uppercase tracking-wider pl-1">
-              Kata Sandi
-            </label>
-            <div className="relative">
-              <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-gray-400">
-                <Lock size={18} />
-              </span>
-              <input
-                type="password"
-                placeholder="******"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full border-3 border-neutral-border rounded-2xl py-3 pl-10 pr-4 text-sm font-bold focus:outline-none focus:border-primary bg-neutral-warm/25 transition-colors"
-              />
-            </div>
-          </div>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-primary hover:bg-primary-dark disabled:bg-gray-200 text-white font-extrabold text-base py-3.5 rounded-2xl border-b-4 border-primary-dark disabled:border-transparent active:border-b-0 active:translate-y-1 transition-all shadow-md flex items-center justify-center gap-2 mt-4"
-          >
-            {loading ? (
-              <span className="flex items-center gap-1">
-                <span className="w-2 h-2 bg-white rounded-full animate-bounce" />
-                <span className="w-2 h-2 bg-white rounded-full animate-bounce delay-75" />
-                <span className="w-2 h-2 bg-white rounded-full animate-bounce delay-150" />
-              </span>
-            ) : (
-              <>
-                <span>Masuk Sekarang</span>
-                <ArrowRight size={18} className="stroke-[2.5]" />
-              </>
-            )}
-          </button>
-        </form>
-
-        {/* Onboarding registration redirect */}
-        <div className="mt-8 text-center relative z-10 border-t border-gray-100 pt-6">
-          <p className="text-xs sm:text-sm font-semibold text-gray-400">
-            Belum punya akun?{" "}
-            <Link
-              href="/onboarding"
-              className="text-primary-dark font-black hover:underline inline-flex items-center gap-0.5"
-            >
-              Daftar Baru Di Sini <ChevronRightIcon />
-            </Link>
-          </p>
-        </div>
       </motion.div>
     </div>
-  );
-}
-
-// Icon helper
-function ChevronRightIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-primary-dark stroke-[3] fill-none">
-      <path d="M9 5l7 7-7 7" />
-    </svg>
   );
 }
