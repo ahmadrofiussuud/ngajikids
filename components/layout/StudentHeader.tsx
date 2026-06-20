@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Flame, Coins, Sparkles, User, ShoppingBag, LayoutDashboard, LogOut } from "lucide-react";
+import { Flame, Coins, Sparkles, User, ShoppingBag, LayoutDashboard, LogOut, BookOpen } from "lucide-react";
 import AvatarKid from "@/components/ui/AvatarKid";
 
 interface StudentHeaderProps {
@@ -15,12 +15,16 @@ export default function StudentHeader({ coins = 120 }: StudentHeaderProps) {
 
   const navItems = [
     { name: "Belajar", href: "/dashboard", icon: <LayoutDashboard size={16} /> },
+    { name: "Buku Iqra", href: "/dashboard/iqra", icon: <BookOpen size={16} /> },
     { name: "Toko Koin", href: "/dashboard/shop", icon: <ShoppingBag size={16} /> },
     { name: "Profil Saya", href: "/dashboard/profile", icon: <User size={16} /> },
   ];
 
   const isActive = (href: string) => {
-    return pathname === href;
+    if (href === "/dashboard") {
+      return pathname === "/dashboard";
+    }
+    return pathname.startsWith(href);
   };
 
   return (

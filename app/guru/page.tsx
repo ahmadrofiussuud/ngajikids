@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Users,
@@ -18,10 +18,12 @@ import {
   Send,
   X,
   ChevronDown,
+  Award,
 } from "lucide-react";
 import Link from "next/link";
 import { generateAIPath, StudentProfile, AssessmentInput, LearningPathOutput } from "@/lib/ai/learningPath";
 import TeacherHeader from "@/components/layout/TeacherHeader";
+import { getStudentIqraProgress, markStudentIqraPassed, IqraProgress } from "@/lib/supabase/iqra";
 
 interface Student {
   id: string;
@@ -79,6 +81,73 @@ export default function TeacherPortal() {
   const [loginOpen, setLoginOpen] = useState(false);
   const [students, setStudents] = useState<Student[]>(initialStudents);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+
+  // Iqra Graduation states
+  const [studentProgress, setStudentProgress] = useState<Record<string, IqraProgress>>({});
+  const [showGradModal, setShowGradModal] = useState(false);
+  const [gradTargetStudent, setGradTargetStudent] = useState<Student | null>(null);
+  const [gradTargetJilid, setGradTargetJilid] = useState<number | null>(null);
+  const [graduating, setGraduating] = useState(false);
+
+  useEffect(() => {
+    async function fetchAllProgress() {
+      const progressMap: Record<string, IqraProgress> = {};
+      for (const s of students) {
+        try {
+          const p = await getStudentIqraProgress(s.id);
+          progressMap[s.id] = p;
+        } catch (err) {
+          console.error("Gagal memuat progres Iqra untuk " + s.name, err);
+        }
+      }
+      setStudentProgress(progressMap);
+    }
+    fetchAllProgress();
+  }, [students]);
+
+  const handleOpenGradModal = (student: Student, jilid: number) => {
+    setGradTargetStudent(student);
+    setGradTargetJilid(jilid);
+    setShowGradModal(true);
+  };
+
+  const handleConfirmGraduation = async () => {
+    if (!gradTargetStudent || !gradTargetJilid) return;
+    setGraduating(true);
+    try {
+      const teacherId = "teacher_1"; // Active teacher
+      const success = await markStudentIqraPassed(gradTargetStudent.id, gradTargetJilid, teacherId);
+      if (success) {
+        // Refetch progress map
+        const p = await getStudentIqraProgress(gradTargetStudent.id);
+        setStudentProgress((prev) => ({
+          ...prev,
+          [gradTargetStudent.id]: p,
+        }));
+
+        // Dynamically update the student's level in the dashboard list
+        setStudents((prev) =>
+          prev.map((s) => {
+            if (s.id === gradTargetStudent.id) {
+              const nextJilid = Math.min(6, gradTargetJilid + 1);
+              return {
+                ...s,
+                level: `iqro${nextJilid}` as any,
+              };
+            }
+            return s;
+          })
+        );
+      }
+    } catch (err) {
+      console.error("Gagal meluluskan jilid santri:", err);
+    } finally {
+      setGraduating(false);
+      setShowGradModal(false);
+      setGradTargetStudent(null);
+      setGradTargetJilid(null);
+    }
+  };
 
   const toggleAttendance = (studentId: string) => {
     setStudents((prev) =>
@@ -386,6 +455,81 @@ export default function TeacherPortal() {
               })}
             </div>
           </div>
+
+          {/* Iqra Graduation Evaluation Panel */}
+          <div className="bg-white border-3 border-neutral-border rounded-[32px] p-6 shadow-sm">
+            <h2 className="font-extrabold text-lg text-gray-800 flex items-center gap-2 mb-4">
+              <Award className="text-secondary animate-bounce" size={20} />
+              Panel Evaluasi Kelulusan Iqra 🎓
+            </h2>
+            <p className="text-xs font-semibold text-gray-400 mb-6 leading-relaxed">
+              Tandai kelulusan jilid santri bimbingan Anda. Setelah diluluskan, jilid berikutnya akan langsung terbuka secara otomatis di dasbor santri.
+            </p>
+
+            <div className="grid grid-cols-1 gap-4">
+              {students.map((student) => {
+                const progress = studentProgress[student.id];
+                const currentVolume = progress?.current_jilid || 1;
+                const passedList = progress?.passed_jilid || [];
+
+                return (
+                  <div key={student.id} className="p-5 bg-gray-50 border border-gray-150 rounded-2xl flex flex-col gap-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div>
+                        <h4 className="font-black text-sm text-gray-800">{student.name}</h4>
+                        <p className="text-[10px] font-bold text-gray-400 mt-1">
+                          Jilid Aktif saat ini: <span className="text-primary-dark font-black bg-emerald-50 border border-primary/20 px-2 py-0.5 rounded-md">Iqra Jilid {currentVolume}</span>
+                        </p>
+                      </div>
+
+                      {currentVolume <= 6 && !passedList.includes(6) ? (
+                        <button
+                          type="button"
+                          onClick={() => handleOpenGradModal(student, currentVolume)}
+                          className="self-start sm:self-center bg-secondary hover:bg-secondary-dark text-white font-black text-xs py-2 px-3.5 rounded-xl border-b-2 border-secondary-dark active:border-b-0 active:translate-y-[1px] transition-all flex items-center gap-1.5 shadow-sm cursor-pointer"
+                        >
+                          <CheckCircle size={13} />
+                          Luluskan Jilid {currentVolume}
+                        </button>
+                      ) : (
+                        <span className="bg-emerald-50 text-emerald-600 border border-emerald-250 text-[10px] font-black px-2.5 py-1.5 rounded-full uppercase tracking-wider select-none self-start sm:self-center shadow-sm flex items-center gap-1">
+                          🏆 Khatam Iqra 6 / Al-Qur'an
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Graduation log / history */}
+                    {passedList.length > 0 && (
+                      <div className="border-t border-gray-200/60 pt-3">
+                        <span className="text-[9px] font-black text-gray-400 uppercase tracking-wider block mb-2">
+                          Riwayat Kelulusan Jilid:
+                        </span>
+                        <div className="flex flex-col gap-1.5 max-h-[100px] overflow-y-auto pr-1">
+                          {passedList.map((j) => {
+                            const dateStr = progress.passed_at[j.toString()]
+                              ? new Date(progress.passed_at[j.toString()]).toLocaleDateString("id-ID", {
+                                  day: "numeric",
+                                  month: "short",
+                                  year: "numeric",
+                                  hour: "2-digit",
+                                  minute: "2-digit"
+                                })
+                              : "Baru saja";
+                            return (
+                              <div key={j} className="flex justify-between items-center text-[10px] font-bold text-gray-550 bg-white border border-gray-150 p-2 rounded-lg">
+                                <span className="flex items-center gap-1">🟢 Lulus Jilid {j}</span>
+                                <span className="text-gray-400 text-[9px]">{dateStr} • Ustadz Riza</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         {/* Right Column: Dynamic Form for reporting */}
@@ -543,6 +687,61 @@ export default function TeacherPortal() {
           )}
         </div>
       </main>
+
+      {/* IQRA GRADUATION CONFIRMATION MODAL */}
+      <AnimatePresence>
+        {showGradModal && gradTargetStudent && gradTargetJilid && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white border-4 border-secondary rounded-[40px] p-6 max-w-sm w-full text-center shadow-2xl relative"
+            >
+              <button
+                type="button"
+                onClick={() => setShowGradModal(false)}
+                className="absolute top-4 right-4 bg-gray-50 hover:bg-gray-100 border p-1.5 rounded-full text-gray-400 transition-colors"
+              >
+                <X size={16} />
+              </button>
+
+              <div className="flex justify-center mb-4 text-secondary">
+                <div className="w-16 h-16 bg-amber-50 border-3 border-secondary rounded-full flex items-center justify-center text-3xl shadow-inner">
+                  🎓
+                </div>
+              </div>
+
+              <h3 className="text-xl font-black text-gray-800">Ujian Kelulusan Iqra</h3>
+              <p className="text-xs font-semibold text-gray-500 mt-2.5 leading-relaxed">
+                Apakah Anda yakin bahwa <strong>{gradTargetStudent.name}</strong> telah menguasai seluruh materi dan layak lulus dari <strong>Iqra Jilid {gradTargetJilid}</strong>?
+              </p>
+
+              <div className="grid grid-cols-2 gap-3 mt-6">
+                <button
+                  type="button"
+                  onClick={() => setShowGradModal(false)}
+                  className="bg-gray-100 hover:bg-gray-150 text-gray-600 font-extrabold text-xs py-3 rounded-xl border border-gray-250 transition-all active:scale-95 cursor-pointer"
+                >
+                  Batal
+                </button>
+                <button
+                  type="button"
+                  onClick={handleConfirmGraduation}
+                  disabled={graduating}
+                  className="bg-secondary hover:bg-secondary-dark text-white font-extrabold text-xs py-3 rounded-xl border-b-4 border-secondary-dark active:border-b-0 active:translate-y-[1px] transition-all flex items-center justify-center gap-1 shadow-sm cursor-pointer"
+                >
+                  {graduating ? (
+                    <span className="w-1.5 h-1.5 bg-white rounded-full animate-bounce" />
+                  ) : (
+                    "Ya, Luluskan! 🎓"
+                  )}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
