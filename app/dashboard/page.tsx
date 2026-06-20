@@ -24,6 +24,7 @@ import AvatarKid from "@/components/ui/AvatarKid";
 import XPBar from "@/components/gamification/XPBar";
 import ProgressRing from "@/components/ui/ProgressRing";
 import StarBadge from "@/components/gamification/StarBadge";
+import StudentHeader from "@/components/layout/StudentHeader";
 
 // Count-up helper component for streak number
 function CountUp({ end, duration = 1.5 }: { end: number; duration?: number }) {
@@ -197,85 +198,7 @@ export default function StudentDashboard() {
       </AnimatePresence>
 
       {/* DASHBOARD NAVBAR HEADER */}
-      <header className="bg-white border-b-3 border-neutral-border py-4 px-4 sm:px-8 shadow-sm">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3 w-full sm:w-auto">
-            <div className="flex items-center gap-2">
-              <span className="font-extrabold text-xl tracking-tight text-primary-dark">
-                Ngaji<span className="text-secondary">Kidz</span>
-              </span>
-              <span className="bg-primary-light text-primary-dark text-[10px] font-black px-2 py-0.5 rounded-full border border-primary/20">
-                STUDENT
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-end gap-3 w-full sm:w-auto">
-            {/* Streak Counter */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="flex items-center gap-1.5 bg-red-50 border border-red-100 px-3.5 py-2 rounded-full text-red-500 font-extrabold text-sm sm:text-base cursor-default"
-            >
-              <Flame size={18} className="fill-red-500 animate-bounce" />
-              <span>
-                <CountUp end={7} /> Hari
-              </span>
-            </motion.div>
-
-            {/* Coin Store Link */}
-            <Link
-              href="/dashboard/shop"
-              className="flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 border border-secondary/20 hover:border-secondary/40 px-3.5 py-2 rounded-full text-secondary-dark font-extrabold text-sm sm:text-base cursor-pointer transition-all active:scale-95"
-              title="Kunjungi Toko Aksesoris Koin Emas"
-            >
-              <Coins size={18} className="fill-secondary text-secondary-dark stroke-1" />
-              <span>{coins} Koin 🛒</span>
-            </Link>
-
-            {/* Profile Dropdown */}
-            <div className="relative pl-3 border-l border-gray-200">
-              <button
-                onClick={() => setLoginOpen(!loginOpen)}
-                className="flex items-center gap-2 hover:bg-gray-50 p-1.5 rounded-2xl border-2 border-neutral-border hover:border-gray-300 transition-all active:scale-95 bg-white"
-              >
-                <AvatarKid character="star" size={32} animated />
-                <span className="text-xs font-black text-gray-700 hidden sm:inline">Fatih</span>
-                <ChevronDown size={14} className="text-gray-400" />
-              </button>
-              
-              <AnimatePresence>
-                {loginOpen && (
-                  <>
-                    <div className="fixed inset-0 z-40" onClick={() => setLoginOpen(false)} />
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      transition={{ duration: 0.15 }}
-                      className="absolute right-0 mt-2 w-48 bg-white border-3 border-neutral-border rounded-2xl shadow-lg py-2 z-50 flex flex-col text-left font-nunito"
-                    >
-                      <Link
-                        href="/dashboard/profile"
-                        onClick={() => setLoginOpen(false)}
-                        className="w-full text-left px-4 py-2.5 text-xs font-black text-gray-700 hover:bg-gray-50 border-b border-gray-100 flex items-center gap-2"
-                      >
-                        <span>👦</span> Profil Saya
-                      </Link>
-                      <Link
-                        href="/login"
-                        onClick={() => setLoginOpen(false)}
-                        className="w-full text-left px-4 py-2.5 text-xs font-black text-red-500 hover:bg-red-50 flex items-center gap-2"
-                      >
-                        <span>🚪</span> Keluar
-                      </Link>
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-        </div>
-      </header>
+      <StudentHeader coins={coins} />
 
       {/* MAIN CONTENT CONTAINER */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 mt-8">

@@ -81,9 +81,8 @@ export default function BlogDetailPage() {
             </div>
           </div>
 
-          {/* LARGE EMOJI THUMBNAIL PLACEHOLDER */}
-          <div className="h-56 sm:h-72 bg-gradient-to-br from-emerald-50 to-teal-50 border border-gray-150 rounded-3xl flex items-center justify-center text-8xl sm:text-9xl select-none">
-            {article.imageUrl}
+          <div className="h-56 sm:h-72 bg-gradient-to-br from-emerald-50 to-teal-50 border border-gray-150 rounded-3xl overflow-hidden flex items-center justify-center select-none">
+            <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover" />
           </div>
 
           {/* CONTENT CONTENT (DUMMY RICH CONTENT) */}

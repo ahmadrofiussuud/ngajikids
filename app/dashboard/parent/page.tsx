@@ -27,6 +27,7 @@ import {
   CartesianGrid,
 } from "recharts";
 import { generateAIPath, StudentProfile, AssessmentInput } from "@/lib/ai/learningPath";
+import ParentHeader from "@/components/layout/ParentHeader";
 
 // Mock Data for Ahmad
 const mockProfile: StudentProfile = {
@@ -94,76 +95,7 @@ export default function ParentDashboard() {
   return (
     <div className="min-h-screen bg-neutral-warm pb-16 font-nunito text-gray-800">
       {/* HEADER NAVBAR */}
-      <header className="sticky top-0 z-40 bg-white/95 border-b-3 border-neutral-border py-4 px-4 sm:px-6 shadow-sm">
-        <div className="max-w-6xl mx-auto flex items-center justify-between gap-2">
-          <div className="flex items-center gap-3">
-            <div>
-              <h1 className="font-extrabold text-xl sm:text-2xl text-gray-800 tracking-tight">
-                Portal Orang Tua 👩‍👦
-              </h1>
-              <p className="text-xs text-gray-400 font-semibold mt-0.5">
-                Progres Ahmad • Iqra 3
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Link
-              href="/dashboard/parent/insights"
-              className="bg-primary/10 hover:bg-primary/25 text-primary-dark font-extrabold text-xs px-3 py-1.5 sm:px-3.5 rounded-full border border-primary/20 hover:border-primary/45 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
-              title="Lihat Analisis Detail & Diagnosis AI"
-            >
-              <span className="hidden sm:inline">AI Insight Aktif</span>
-              <span className="sm:hidden">AI Insight</span>
-              <TrendingUp size={12} className="stroke-[2.5]" />
-            </Link>
-
-            {/* Profile Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => setLoginOpen(!loginOpen)}
-                className="flex items-center gap-2 hover:bg-gray-50 p-1.5 rounded-2xl border-2 border-neutral-border hover:border-gray-300 transition-all active:scale-95 bg-white"
-              >
-                <div className="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-black text-sm">
-                  👩‍👦
-                </div>
-                <span className="text-xs font-black text-gray-700 hidden sm:inline">Orang Tua</span>
-                <ChevronDown size={14} className="text-gray-400" />
-              </button>
-              
-              <AnimatePresence>
-                {loginOpen && (
-                  <>
-                    <div className="fixed inset-0 z-40" onClick={() => setLoginOpen(false)} />
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      transition={{ duration: 0.15 }}
-                      className="absolute right-0 mt-2 w-48 bg-white border-3 border-neutral-border rounded-2xl shadow-lg py-2 z-50 flex flex-col text-left font-nunito"
-                    >
-                      <Link
-                        href="/dashboard/parent/profile"
-                        onClick={() => setLoginOpen(false)}
-                        className="w-full text-left px-4 py-2.5 text-xs font-black text-gray-700 hover:bg-gray-50 border-b border-gray-100 flex items-center gap-2"
-                      >
-                        <span>👩‍👦</span> Profil Orang Tua
-                      </Link>
-                      <Link
-                        href="/login"
-                        onClick={() => setLoginOpen(false)}
-                        className="w-full text-left px-4 py-2.5 text-xs font-black text-red-500 hover:bg-red-50 flex items-center gap-2"
-                      >
-                        <span>🚪</span> Keluar
-                      </Link>
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-        </div>
-      </header>
+      <ParentHeader />
 
       {/* MAIN LAYOUT CONTAINER */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 mt-8 flex flex-col gap-8">

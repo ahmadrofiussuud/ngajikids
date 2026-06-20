@@ -47,16 +47,16 @@ export default function TentangKamiPage() {
 
   const team = {
     management: [
-      { name: "Muhammad Rofi'us Su'ud", role: "Chief Executive Officer & Founder", avatar: "👨‍💼" },
-      { name: "Ahmad Mujadid", role: "Chief Operating Officer", avatar: "👨‍💻" },
+      { name: "Muhammad Rofi'us Su'ud", role: "Chief Executive Officer & Founder", avatar: "/images/team/ceo.png" },
+      { name: "Ahmad Mujadid", role: "Chief Operating Officer", avatar: "/images/team/coo.png" },
     ],
     syariah: [
-      { name: "Ustadz KH. Abdul Wahab, Lc.", role: "Ketua Dewan Penasihat Syariah", avatar: "👳‍♂️" },
-      { name: "Ustadzah Fatimah Azzahra, M.Ag.", role: "Anggota Dewan Syariah & Kurikulum", avatar: "🧕" },
+      { name: "Ustadz KH. Abdul Wahab, Lc.", role: "Ketua Dewan Penasihat Syariah", avatar: "/images/team/syariah_wahab.png" },
+      { name: "Ustadzah Fatimah Azzahra, M.Ag.", role: "Anggota Dewan Syariah & Kurikulum", avatar: "/images/team/syariah_fatimah.png" },
     ],
     tech: [
-      { name: "Fatih Al-Faruq", role: "Lead Software Architect", avatar: "🧑‍💻" },
-      { name: "Aisyah Humaira", role: "Senior UX/UI Designer", avatar: "👩‍🎨" },
+      { name: "Fatih Al-Faruq", role: "Lead Software Architect", avatar: "/images/team/lead_dev.png" },
+      { name: "Aisyah Humaira", role: "Senior UX/UI Designer", avatar: "/images/team/designer.png" },
     ],
   };
 
@@ -176,9 +176,8 @@ export default function TentangKamiPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {team.management.map((t, idx) => (
               <div key={idx} className="bg-white border-3 border-neutral-border rounded-[28px] p-5 shadow-sm flex items-center gap-4">
-                {/* TODO: ganti dengan data tim asli */}
-                <div className="w-14 h-14 bg-emerald-50 border-2 border-primary/10 rounded-2xl flex items-center justify-center text-3xl shadow-inner select-none flex-shrink-0">
-                  {t.avatar}
+                <div className="w-14 h-14 bg-emerald-50 border-2 border-primary/10 rounded-2xl overflow-hidden flex items-center justify-center shadow-inner select-none flex-shrink-0">
+                  <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <h4 className="font-extrabold text-base text-gray-800">{t.name}</h4>
@@ -197,9 +196,8 @@ export default function TentangKamiPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {team.syariah.map((t, idx) => (
               <div key={idx} className="bg-white border-3 border-neutral-border rounded-[28px] p-5 shadow-sm flex items-center gap-4">
-                {/* TODO: ganti dengan data tim asli */}
-                <div className="w-14 h-14 bg-amber-50 border-2 border-secondary/10 rounded-2xl flex items-center justify-center text-3xl shadow-inner select-none flex-shrink-0">
-                  {t.avatar}
+                <div className="w-14 h-14 bg-amber-50 border-2 border-secondary/10 rounded-2xl overflow-hidden flex items-center justify-center shadow-inner select-none flex-shrink-0">
+                  <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <h4 className="font-extrabold text-base text-gray-800">{t.name}</h4>
@@ -218,9 +216,8 @@ export default function TentangKamiPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {team.tech.map((t, idx) => (
               <div key={idx} className="bg-white border-3 border-neutral-border rounded-[28px] p-5 shadow-sm flex items-center gap-4">
-                {/* TODO: ganti dengan data tim asli */}
-                <div className="w-14 h-14 bg-purple-50 border-2 border-accent/10 rounded-2xl flex items-center justify-center text-3xl shadow-inner select-none flex-shrink-0">
-                  {t.avatar}
+                <div className="w-14 h-14 bg-purple-50 border-2 border-accent/10 rounded-2xl overflow-hidden flex items-center justify-center shadow-inner select-none flex-shrink-0">
+                  <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <h4 className="font-extrabold text-base text-gray-800">{t.name}</h4>

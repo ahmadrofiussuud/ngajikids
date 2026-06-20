@@ -16,6 +16,7 @@ import {
   Trash2,
 } from "lucide-react";
 import Link from "next/link";
+import ParentHeader from "@/components/layout/ParentHeader";
 
 export default function ParentProfilePage() {
   const [parentName, setParentName] = useState("Fatimah Azzahra");
@@ -77,21 +78,7 @@ export default function ParentProfilePage() {
       </AnimatePresence>
 
       {/* HEADER */}
-      <header className="bg-white border-b-3 border-neutral-border py-4 px-4 sm:px-8 shadow-sm sticky top-0 z-30">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <Link
-            href="/dashboard/parent"
-            className="flex items-center gap-1.5 text-gray-500 hover:text-gray-700 font-extrabold text-sm transition-all"
-          >
-            <ChevronLeft size={18} className="stroke-[3]" />
-            Dashboard
-          </Link>
-          <h1 className="font-black text-lg text-gray-800 tracking-tight">
-            Profil &amp; Keamanan Orang Tua 👩‍👦
-          </h1>
-          <div className="w-16" />
-        </div>
-      </header>
+      <ParentHeader />
 
       <main className="max-w-4xl mx-auto px-4 mt-8">
         <form onSubmit={handleSave} className="grid grid-cols-1 md:grid-cols-3 gap-8">

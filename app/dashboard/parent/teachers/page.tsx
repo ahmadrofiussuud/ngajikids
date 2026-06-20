@@ -8,6 +8,7 @@ import TeacherCard from "@/components/ui/TeacherCard";
 import TeacherFilterBar from "@/components/ui/TeacherFilterBar";
 import { Search, ChevronRight, X, AlertCircle } from "lucide-react";
 import Link from "next/link";
+import ParentHeader from "@/components/layout/ParentHeader";
 
 export default function ParentTeachersListPage() {
   const teachers = useTeacherStore((state) => state.teachers);
@@ -58,24 +59,7 @@ export default function ParentTeachersListPage() {
     <div className="min-h-screen bg-neutral-warm pb-16 font-nunito text-gray-800 text-left">
       
       {/* NAVBAR */}
-      <header className="bg-white border-b-3 border-neutral-border py-4 px-4 sm:px-8 shadow-sm sticky top-0 z-30">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-1">
-            <Link
-              href="/dashboard/parent"
-              className="text-xs font-black text-gray-400 hover:text-gray-600 transition-colors"
-            >
-              Dashboard
-            </Link>
-            <ChevronRight size={12} className="text-gray-300" />
-            <span className="text-xs font-black text-gray-700">Guru Ngaji</span>
-          </div>
-          
-          <span className="bg-primary/10 text-primary-dark font-black text-xs px-3 py-1 rounded-full border border-primary/20">
-            Booking Kelas Aktif
-          </span>
-        </div>
-      </header>
+      <ParentHeader />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 mt-8 flex flex-col gap-6">
         

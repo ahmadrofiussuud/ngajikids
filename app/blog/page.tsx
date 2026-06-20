@@ -25,7 +25,7 @@ export const mockArticles: Article[] = [
     author: "Bunda Sarah",
     date: "19 Juni 2026",
     readTime: "4 mnt baca",
-    imageUrl: "🎨",
+    imageUrl: "/images/blog/parenting.png",
   },
   {
     slug: "kisah-keteladanan-nabi-ismail",
@@ -35,7 +35,7 @@ export const mockArticles: Article[] = [
     author: "Ustadz Riza",
     date: "15 Juni 2026",
     readTime: "6 mnt baca",
-    imageUrl: "🐑",
+    imageUrl: "/images/blog/story.png",
   },
   {
     slug: "mengajarkan-adab-makan-sunnah",
@@ -45,7 +45,7 @@ export const mockArticles: Article[] = [
     author: "Ustazah Aisyah",
     date: "10 Juni 2026",
     readTime: "5 mnt baca",
-    imageUrl: "🍎",
+    imageUrl: "/images/blog/adab.png",
   },
   {
     slug: "panduan-tajwid-nun-sukun-tanwin",
@@ -55,7 +55,7 @@ export const mockArticles: Article[] = [
     author: "Ustadz Khalid",
     date: "05 Juni 2026",
     readTime: "8 mnt baca",
-    imageUrl: "📖",
+    imageUrl: "/images/blog/tajwid.png",
   },
   {
     slug: "kebiasaan-mengaji-tanpa-paksaan",
@@ -65,7 +65,7 @@ export const mockArticles: Article[] = [
     author: "Bunda Sarah",
     date: "28 Mei 2026",
     readTime: "5 mnt baca",
-    imageUrl: "🏡",
+    imageUrl: "/images/blog/parenting.png",
   },
   {
     slug: "kisah-nabi-dawud-melawan-jalut",
@@ -75,7 +75,7 @@ export const mockArticles: Article[] = [
     author: "Ustadz Riza",
     date: "20 Mei 2026",
     readTime: "7 mnt baca",
-    imageUrl: "🏹",
+    imageUrl: "/images/blog/story.png",
   },
 ];
 
@@ -176,9 +176,8 @@ export default function BlogListingPage() {
                   className="bg-white border-3 border-neutral-border rounded-[32px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
                 >
                   <div>
-                    {/* Thumbnail placeholder with emoji */}
-                    <div className="h-44 bg-gradient-to-br from-emerald-50 to-teal-50 border-b border-gray-100 flex items-center justify-center text-6xl select-none">
-                      {article.imageUrl}
+                    <div className="h-44 bg-gradient-to-br from-emerald-50 to-teal-50 border-b border-gray-100 overflow-hidden flex items-center justify-center select-none">
+                      <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover" />
                     </div>
 
                     <div className="p-6 text-left flex flex-col gap-3">

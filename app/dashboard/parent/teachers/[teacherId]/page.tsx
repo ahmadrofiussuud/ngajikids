@@ -19,6 +19,7 @@ import {
   Coins,
 } from "lucide-react";
 import Link from "next/link";
+import ParentHeader from "@/components/layout/ParentHeader";
 
 export default function TeacherDetailPage() {
   const params = useParams();
@@ -222,21 +223,7 @@ export default function TeacherDetailPage() {
       </AnimatePresence>
 
       {/* HEADER */}
-      <header className="bg-white border-b-3 border-neutral-border py-4 px-4 sm:px-8 shadow-sm sticky top-0 z-30">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <Link
-            href="/dashboard/parent/teachers"
-            className="flex items-center gap-1.5 text-gray-500 hover:text-gray-700 font-extrabold text-sm transition-all"
-          >
-            <ChevronLeft size={18} className="stroke-[3]" />
-            Kembali
-          </Link>
-          <h1 className="font-black text-lg text-gray-800 tracking-tight">
-            Profil Pengajar 🎓
-          </h1>
-          <div className="w-16" />
-        </div>
-      </header>
+      <ParentHeader />
 
       <main className="max-w-5xl mx-auto px-4 mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
         
