@@ -165,10 +165,30 @@ export default function ParentDashboard() {
       </header>
 
       {/* MAIN LAYOUT CONTAINER */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 mt-8 flex flex-col gap-8">
         
-        {/* Left Columns (1 & 2): Core Data & Chart */}
-        <div className="lg:col-span-2 flex flex-col gap-8">
+        {/* Banner Cari Guru Ngaji */}
+        <div className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-3xl p-6 shadow-md border-3 border-teal-700 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h3 className="font-extrabold text-lg flex items-center gap-2">
+              <span>🕌</span> Cari &amp; Booking Guru Ngaji (Ustadz/Ustazah)
+            </h3>
+            <p className="text-sm font-semibold text-emerald-50 opacity-90 mt-1">
+              Pilih ustadz/ustazah terbaik yang sesuai dengan kebutuhan belajar anak Anda. Atur jadwal fleksibel sekarang!
+            </p>
+          </div>
+          <Link
+            href="/dashboard/parent/teachers"
+            className="bg-amber-400 hover:bg-amber-300 text-teal-950 font-black text-sm px-6 py-3 rounded-2xl border-b-4 border-amber-600 hover:border-amber-500 active:scale-95 transition-all shadow-md text-center inline-block shrink-0"
+          >
+            Temukan Guru Ngaji ✨
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* Left Columns (1 & 2): Core Data & Chart */}
+          <div className="lg:col-span-2 flex flex-col gap-8">
           
           {/* Weekly Summary Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -430,6 +450,7 @@ export default function ParentDashboard() {
           </div>
 
         </div>
+      </div>
       </main>
 
     </div>

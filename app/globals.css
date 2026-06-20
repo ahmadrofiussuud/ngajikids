@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Fredoka:wght@300..700&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -21,8 +22,9 @@
   --color-neutral-card: #FFFDF9;
   --color-neutral-border: #EAE6DF;
   
-  --font-nunito: var(--font-nunito), sans-serif;
-  --font-amiri: var(--font-amiri), serif;
+  --font-nunito: 'Nunito', sans-serif;
+  --font-amiri: 'Amiri', serif;
+  --font-fredoka: 'Fredoka', sans-serif;
 }
 
 :root {
