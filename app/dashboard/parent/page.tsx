@@ -94,8 +94,8 @@ export default function ParentDashboard() {
   return (
     <div className="min-h-screen bg-neutral-warm pb-16 font-nunito text-gray-800">
       {/* HEADER NAVBAR */}
-      <header className="sticky top-0 z-40 bg-white/95 border-b-3 border-neutral-border py-4 px-6 shadow-sm">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-white/95 border-b-3 border-neutral-border py-4 px-4 sm:px-6 shadow-sm">
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-2">
           <div className="flex items-center gap-3">
             <div>
               <h1 className="font-extrabold text-xl sm:text-2xl text-gray-800 tracking-tight">
@@ -110,10 +110,11 @@ export default function ParentDashboard() {
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard/parent/insights"
-              className="bg-primary/10 hover:bg-primary/25 text-primary-dark font-extrabold text-xs px-3.5 py-1.5 rounded-full border border-primary/20 hover:border-primary/45 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
+              className="bg-primary/10 hover:bg-primary/25 text-primary-dark font-extrabold text-xs px-3 py-1.5 sm:px-3.5 rounded-full border border-primary/20 hover:border-primary/45 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
               title="Lihat Analisis Detail & Diagnosis AI"
             >
-              <span>AI Insight Aktif</span>
+              <span className="hidden sm:inline">AI Insight Aktif</span>
+              <span className="sm:hidden">AI Insight</span>
               <TrendingUp size={12} className="stroke-[2.5]" />
             </Link>
 
@@ -188,7 +189,7 @@ export default function ParentDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
           {/* Left Columns (1 & 2): Core Data & Chart */}
-          <div className="lg:col-span-2 flex flex-col gap-8">
+          <div className="lg:col-span-2 flex flex-col gap-8 min-w-0">
           
           {/* Weekly Summary Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -252,8 +253,8 @@ export default function ParentDashboard() {
           </div>
 
           {/* Recharts Progress Chart Card */}
-          <div className="bg-white border-3 border-neutral-border rounded-[32px] p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-6">
+          <div className="bg-white border-3 border-neutral-border rounded-[32px] p-6 shadow-sm min-w-0">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
                 <h3 className="font-extrabold text-lg text-gray-800 flex items-center gap-2">
                   <TrendingUp className="text-primary" size={20} />
@@ -263,7 +264,7 @@ export default function ParentDashboard() {
                   Menampilkan nilai keakuratan pelafalan dalam 4 sesi terakhir
                 </p>
               </div>
-              <div className="flex items-center gap-4 text-xs font-bold">
+              <div className="flex flex-wrap items-center gap-4 text-xs font-bold">
                 <span className="flex items-center gap-1.5">
                   <span className="w-3 h-3 bg-primary rounded-full" /> Nilai Ahmad
                 </span>

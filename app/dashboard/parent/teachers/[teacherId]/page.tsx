@@ -252,8 +252,12 @@ export default function TeacherDetailPage() {
               </div>
             )}
 
-            <div className="w-24 h-24 rounded-[24px] bg-gradient-to-br from-emerald-100 to-teal-100 border-3 border-primary/20 flex items-center justify-center text-primary-dark font-black text-3xl shadow-inner select-none flex-shrink-0">
-              {teacher.full_name.split(" ").map(n => n[0]).slice(0, 2).join("").toUpperCase()}
+            <div className="w-24 h-24 rounded-[24px] bg-gradient-to-br from-emerald-100 to-teal-100 border-3 border-primary/20 flex items-center justify-center text-primary-dark font-black text-3xl shadow-inner select-none flex-shrink-0 overflow-hidden">
+              {teacher.avatar_url ? (
+                <img src={teacher.avatar_url} alt={teacher.full_name} className="w-full h-full object-cover" />
+              ) : (
+                teacher.full_name.split(" ").map(n => n[0]).slice(0, 2).join("").toUpperCase()
+              )}
             </div>
 
             <div className="flex-grow mt-2 sm:mt-0">
