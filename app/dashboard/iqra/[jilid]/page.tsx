@@ -68,25 +68,13 @@ export default async function IqraReaderPage({ params }: PageProps) {
         </div>
 
         {/* PDF Reader Container */}
-        <div className="bg-white border-3 border-neutral-border rounded-[36px] p-4 sm:p-6 shadow-sm flex flex-col gap-4">
+        <div className="bg-white border-3 border-neutral-border rounded-[36px] p-4 sm:p-6 shadow-sm">
           <div className="w-full h-[72vh] border border-gray-150 rounded-2xl overflow-hidden bg-gray-50 relative">
             <iframe
               src={pdfUrl}
               className="w-full h-full border-none"
               title={`Iqra Jilid ${jilidNum} PDF Reader`}
             />
-          </div>
-
-          {/* Placement Guide Alert */}
-          <div className="flex items-start gap-3 bg-amber-50 border border-secondary/20 p-4 rounded-2xl">
-            <AlertCircle size={18} className="text-secondary shrink-0 mt-0.5" />
-            <div className="text-xs">
-              <p className="font-extrabold text-secondary-dark">Catatan Berkas PDF:</p>
-              <p className="font-semibold text-gray-550 mt-1 leading-relaxed">
-                Pembaca PDF di atas memuat file dari: <code className="bg-white/80 px-1 py-0.5 border rounded font-mono font-bold text-teal-800">public/iqra/jilid-{jilidNum}.pdf</code>.
-                Jika tampilan di atas kosong atau ter-download otomatis, pastikan Anda telah menaruh file PDF Iqra jilid Anda di folder tersebut dengan nama berkas yang sesuai.
-              </p>
-            </div>
           </div>
         </div>
 
