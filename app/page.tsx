@@ -86,34 +86,6 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-neutral-warm font-nunito flex flex-col selection:bg-primary-light selection:text-primary-dark">
-      {/* HEADER NAVBAR */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b-3 border-neutral-border py-4 px-4 sm:px-8 shadow-sm">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="bg-primary p-2.5 rounded-2xl border-2 border-primary-dark shadow-sm">
-              <Sparkles className="text-white w-5 h-5" />
-            </div>
-            <span className="font-extrabold text-xl sm:text-2xl tracking-tight text-primary-dark">
-              Ngaji<span className="text-secondary">Kidz</span>
-            </span>
-          </div>
-
-          <nav className="hidden md:flex items-center gap-8 text-sm font-extrabold text-gray-500">
-            <a href="#fitur" className="hover:text-primary-dark transition-colors">Fitur</a>
-            <a href="#cara-kerja" className="hover:text-primary-dark transition-colors">Cara Kerja</a>
-            <a href="#harga" className="hover:text-primary-dark transition-colors">Harga</a>
-            <a href="#faq" className="hover:text-primary-dark transition-colors">FAQ</a>
-          </nav>
-
-          <Link
-            href="/login"
-            className="bg-primary hover:bg-primary-dark text-white font-extrabold text-sm py-2.5 px-5 rounded-2xl border-b-4 border-primary-dark active:border-b-0 active:translate-y-1 transition-all"
-          >
-            Mulai Belajar
-          </Link>
-        </div>
-      </header>
-
       {/* 1. HERO SECTION */}
       <section className="relative bg-gradient-to-b from-primary-light/25 to-transparent pt-12 pb-20 px-4 sm:px-6 overflow-hidden bg-islamic-pattern">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
@@ -148,12 +120,12 @@ export default function LandingPage() {
                   Coba Gratis Sekarang
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform stroke-[2.5]" />
                 </Link>
-                <a
-                  href="#cara-kerja"
+                <Link
+                  href="/#cara-kerja"
                   className="w-full sm:w-auto bg-white hover:bg-gray-50 text-gray-700 font-extrabold text-base py-3.5 px-8 rounded-2xl border-2 border-neutral-border shadow-sm flex items-center justify-center"
                 >
                   Pelajari Lebih Lanjut
-                </a>
+                </Link>
               </div>
             </FadeIn>
           </div>
@@ -574,20 +546,6 @@ export default function LandingPage() {
           </FadeIn>
         </div>
       </section>
-
-      {/* BOTTOM FOOTER */}
-      <footer className="bg-white border-t-3 border-neutral-border py-8 px-4 text-center">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm font-bold text-gray-400">
-          <div className="flex items-center gap-2">
-            <span className="font-extrabold text-lg text-primary-dark">
-              Ngaji<span className="text-secondary">Kidz</span>
-            </span>
-          </div>
-          <p className="flex items-center gap-1 text-xs">
-            © 2026 NgajiKidz. Dibuat dengan <Heart size={12} className="fill-red-400 text-red-400" /> untuk Anak Indonesia.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

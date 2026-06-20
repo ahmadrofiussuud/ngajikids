@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import PublicLayout from "@/components/layout/PublicLayout";
 
 export const metadata: Metadata = {
   title: "NgajiKidz - Belajar Al-Qur'an Seru & Interaktif",
@@ -23,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body className="bg-neutral-warm text-gray-800 antialiased font-nunito min-h-screen overflow-x-hidden">
-        {children}
+        <PublicLayout>{children}</PublicLayout>
       </body>
     </html>
   );

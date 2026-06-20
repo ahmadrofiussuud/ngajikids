@@ -9,9 +9,10 @@ import { Teacher } from "@/lib/teacherStore";
 interface TeacherCardProps {
   teacher: Teacher;
   index: number;
+  isPublic?: boolean;
 }
 
-export default function TeacherCard({ teacher, index }: TeacherCardProps) {
+export default function TeacherCard({ teacher, index, isPublic = false }: TeacherCardProps) {
   // Format price to IDR
   const formatIDR = (price: number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -152,19 +153,29 @@ export default function TeacherCard({ teacher, index }: TeacherCardProps) {
       {/* Button actions */}
       <div className="grid grid-cols-2 gap-3 mt-1">
         <Link
-          href={`/dashboard/parent/teachers/${teacher.id}`}
+          href={isPublic ? `/ustadz/${teacher.id}` : `/dashboard/parent/teachers/${teacher.id}`}
           className="bg-gray-150 hover:bg-gray-250 text-gray-600 font-extrabold text-xs text-center py-3 rounded-xl border-b-2 border-gray-300 active:border-b-0 active:translate-y-[1px] transition-all flex items-center justify-center"
         >
           Lihat Profil
         </Link>
         
-        <Link
-          href={`/dashboard/parent/teachers/${teacher.id}#booking`}
-          className="bg-primary hover:bg-primary-dark text-white font-extrabold text-xs text-center py-3 rounded-xl border-b-2 border-primary-dark active:border-b-0 active:translate-y-[1px] transition-all flex items-center justify-center gap-1 shadow-sm"
-        >
-          <CalendarDays size={14} />
-          Booking Kelas
-        </Link>
+        {isPublic ? (
+          <Link
+            href="/login"
+            className="bg-primary hover:bg-primary-dark text-white font-extrabold text-xs text-center py-3 rounded-xl border-b-2 border-primary-dark active:border-b-0 active:translate-y-[1px] transition-all flex items-center justify-center gap-1 shadow-sm"
+          >
+            <CalendarDays size={14} />
+            Booking Kelas
+          </Link>
+        ) : (
+          <Link
+            href={`/dashboard/parent/teachers/${teacher.id}#booking`}
+            className="bg-primary hover:bg-primary-dark text-white font-extrabold text-xs text-center py-3 rounded-xl border-b-2 border-primary-dark active:border-b-0 active:translate-y-[1px] transition-all flex items-center justify-center gap-1 shadow-sm"
+          >
+            <CalendarDays size={14} />
+            Booking Kelas
+          </Link>
+        )}
       </div>
 
     </motion.div>
