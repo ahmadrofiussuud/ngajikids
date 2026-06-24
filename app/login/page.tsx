@@ -53,7 +53,7 @@ export default function LoginPage() {
   const roleCards = [
     {
       role: "student" as UserRole,
-      title: "Siswa 👦",
+      title: "Santri 👦",
       desc: "Masuk gerbang belajar seru, kumpulkan koin & lencana menarik!",
       avatar: <AvatarKid character="star" size={54} animated />,
       colorClass: "hover:bg-emerald-50/40 hover:border-emerald-500 border-neutral-border",
@@ -73,7 +73,7 @@ export default function LoginPage() {
     },
     {
       role: "teacher" as UserRole,
-      title: "Guru Pengajar 🎓",
+      title: "Ustadz 🎓",
       desc: "Kelola kelas bimbingan, jadwal tatap muka, & input laporan AI.",
       avatar: (
         <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center font-black text-2xl border-2 border-amber-250 shadow-sm select-none">
@@ -155,7 +155,7 @@ export default function LoginPage() {
               </motion.div>
               <h2 className="text-2xl font-black text-gray-800">Berhasil Masuk! 🎉</h2>
               <p className="text-sm font-semibold text-gray-400 mt-1">
-                Menghubungkan ke dasbor {selectedRole === "student" ? "Siswa" : selectedRole === "parent" ? "Orang Tua" : "Ustadz"}...
+                Menghubungkan ke dasbor {selectedRole === "student" ? "Santri" : selectedRole === "parent" ? "Orang Tua" : "Ustadz"}...
               </p>
             </motion.div>
           )}
@@ -168,30 +168,39 @@ export default function LoginPage() {
           </h3>
 
           {roleCards.map((card) => (
-            <button
-              key={card.role}
-              type="button"
-              onClick={() => handleRoleSelect(card.role)}
-              className={`w-full p-4 rounded-3xl border-3 text-left transition-all active:scale-[0.98] flex items-center justify-between gap-4 bg-white hover:shadow-md ${card.colorClass}`}
-            >
-              <div className="flex items-center gap-4">
-                <div className="flex-shrink-0">
-                  {card.avatar}
+            <div key={card.role} className="flex flex-col gap-1.5">
+              <button
+                type="button"
+                onClick={() => handleRoleSelect(card.role)}
+                className={`w-full p-4 rounded-3xl border-3 text-left transition-all active:scale-[0.98] flex items-center justify-between gap-4 bg-white hover:shadow-md ${card.colorClass}`}
+              >
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0">
+                    {card.avatar}
+                  </div>
+                  <div>
+                    <h4 className="font-extrabold text-base text-gray-800 flex items-center gap-2">
+                      {card.title}
+                    </h4>
+                    <p className="text-xs font-semibold text-gray-400 mt-1 leading-relaxed max-w-[240px]">
+                      {card.desc}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-extrabold text-base text-gray-800 flex items-center gap-2">
-                    {card.title}
-                  </h4>
-                  <p className="text-xs font-semibold text-gray-400 mt-1 leading-relaxed max-w-[240px]">
-                    {card.desc}
-                  </p>
-                </div>
-              </div>
 
-              <div className="flex-shrink-0 bg-neutral-warm border border-neutral-border p-2 rounded-xl text-gray-400 group-hover:text-primary transition-colors">
-                <ChevronRight size={18} className="stroke-[3]" />
-              </div>
-            </button>
+                <div className="flex-shrink-0 bg-neutral-warm border border-neutral-border p-2 rounded-xl text-gray-400 group-hover:text-primary transition-colors">
+                  <ChevronRight size={18} className="stroke-[3]" />
+                </div>
+              </button>
+              {card.role === "teacher" && (
+                <div className="text-center text-xs mt-1">
+                  <span className="font-semibold text-gray-400">Calon Ustadz? </span>
+                  <Link href="/guru/register" className="font-extrabold text-amber-600 hover:underline">
+                    Daftar Baru di Sini ➔
+                  </Link>
+                </div>
+              )}
+            </div>
           ))}
         </div>
 

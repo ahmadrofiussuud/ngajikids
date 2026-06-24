@@ -5,7 +5,7 @@ import PublicLayout from "@/components/layout/PublicLayout";
 export const metadata: Metadata = {
   title: "NgajiKidz - Belajar Al-Qur'an Seru & Interaktif",
   description:
-    "NgajiKidz adalah platform belajar Al-Qur'an interaktif untuk anak-anak usia 6-12 tahun di Indonesia. Dilengkapi gamifikasi, tracker progres AI, dan belajar bersama guru.",
+    "NgajiKidz adalah platform belajar Al-Qur'an interaktif untuk anak-anak usia 6-12 tahun di Indonesia. Dilengkapi gamifikasi, tracker progres AI, dan belajar bersama Ustadz.",
   keywords: [
     "ngaji",
     "belajar mengaji",

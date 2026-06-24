@@ -20,12 +20,44 @@ import {
   Calendar,
   Lock,
   Heart,
+  Gem,
+  Mic,
+  Laptop,
+  QrCode,
+  Wallet,
+  FileText,
+  Tag,
+  RotateCcw,
 } from "lucide-react";
 import KidReadingQuran from "@/components/animations/KidReadingQuran";
 import FadeIn from "@/components/animations/FadeIn";
 import Link from "next/link";
 
 export default function LandingPage() {
+  // Framer Motion Variants for 3 accounts section
+  const roleSectionVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const roleCardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring" as const,
+        stiffness: 100,
+        damping: 15,
+      },
+    },
+  };
+
   // States for interactive components
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
@@ -42,10 +74,10 @@ export default function LandingPage() {
     },
     {
       q: "Apa yang dimaksud dengan Akad Ijarah dalam biaya langganan?",
-      a: "Dalam prinsip muamalah syariah, kami menggunakan Akad Ijarah (sewa-jasa). Anda membayarkan biaya sebagai kompensasi atas penyediaan jasa pengajaran, pemeliharaan sistem aplikasi, dan penyediaan guru ngaji terverifikasi secara syar'i.",
+      a: "Dalam prinsip muamalah syariah, kami menggunakan Akad Ijarah (sewa-jasa). Anda membayarkan biaya sebagai kompensasi atas penyediaan jasa pengajaran, pemeliharaan sistem aplikasi, dan penyediaan Ustadz terverifikasi secara syar'i.",
     },
     {
-      q: "Apakah anak saya bisa belajar langsung dengan guru ngaji secara tatap muka virtual?",
+      q: "Apakah anak saya bisa belajar langsung dengan Ustadz secara tatap muka virtual?",
       a: "Ya! Di paket Premium, anak Anda mendapatkan akses sesi interaktif 1-on-1 bersama Ustadz atau Ustadzah terverifikasi yang dilatih khusus metode pengajaran ramah anak.",
     },
   ];
@@ -67,7 +99,7 @@ export default function LandingPage() {
     {
       name: "Umi Fatimah",
       role: "Pendidik & Orangtua, Bandung",
-      text: "Metode gamifikasi Islami yang dipadukan dengan bimbingan guru ngaji di platform ini sangat terstruktur. Anak saya belajar tajwid tanpa merasa sedang dipaksa belajar.",
+      text: "Metode gamifikasi Islami yang dipadukan dengan bimbingan Ustadz di platform ini sangat terstruktur. Anak saya belajar tajwid tanpa merasa sedang dipaksa belajar.",
       rating: 5,
     },
   ];
@@ -160,6 +192,137 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* 2.5. THREE ACCOUNTS EXPLAINER */}
+      <section className="py-20 px-4 sm:px-6 bg-neutral-warm border-b-3 border-neutral-border">
+        <div className="max-w-6xl mx-auto text-center">
+          <span className="text-xs sm:text-sm font-extrabold text-primary-dark bg-primary-light/50 border border-primary/20 px-4 py-1.5 rounded-full inline-block uppercase tracking-wider mb-4 shadow-xs">
+            Pilihan Akun Akses
+          </span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-800 leading-tight">
+            Satu Platform, Tiga Pengalaman Berbeda
+          </h2>
+          <p className="text-sm font-semibold text-gray-400 mt-3 max-w-2xl mx-auto leading-relaxed">
+            NgajiKidz dirancang khusus untuk tiga peran — setiap pengguna mendapat dasbor, fitur, dan pengalaman yang disesuaikan.
+          </p>
+
+          <motion.div
+            variants={roleSectionVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 text-left"
+          >
+            {/* Card 1: Santri */}
+            <motion.div
+              variants={roleCardVariants}
+              className="bg-white border-3 border-emerald-500 rounded-[32px] p-6 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/5 rounded-full filter blur-lg pointer-events-none" />
+              <div>
+                <div className="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-800 border-2 border-emerald-250 flex items-center justify-center text-3xl shadow-sm mb-6 select-none font-bold">
+                  👦
+                </div>
+                <h3 className="font-extrabold text-lg text-gray-850">Akun Santri</h3>
+                <p className="text-xs font-semibold text-gray-400 mt-2.5 leading-relaxed">
+                  Anak belajar Iqra dan Al-Qur'an lewat peta petualangan interaktif. Kumpulkan koin, raih lencana, dan naiki level bersama teman-teman.
+                </p>
+                
+                {/* Key Features bullet points list */}
+                <div className="mt-4 pt-4 border-t border-gray-100/60">
+                  <span className="text-[10px] font-black text-gray-450 uppercase tracking-widest block mb-2">Fitur Kunci:</span>
+                  <p className="text-[11px] font-bold text-gray-500 leading-relaxed">
+                    Peta belajar Iqra 1–6 · Gamifikasi koin &amp; lencana · AI Tajwid Checker · Toko avatar
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <Link
+                  href="/login"
+                  className="w-full bg-[#10B981] hover:bg-[#059669] text-white font-extrabold text-center block py-3 rounded-2xl border-b-4 border-[#047857] active:border-b-0 active:translate-y-1 transition-all text-xs sm:text-sm shadow-sm"
+                >
+                  Coba sebagai Santri ➔
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Card 2: Orang Tua */}
+            <motion.div
+              variants={roleCardVariants}
+              className="bg-white border-3 border-cyan-400 rounded-[32px] p-6 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-20 h-20 bg-cyan-400/5 rounded-full filter blur-lg pointer-events-none" />
+              <div>
+                <div className="w-14 h-14 rounded-2xl bg-cyan-100 text-cyan-850 border-2 border-cyan-250 flex items-center justify-center text-3xl shadow-sm mb-6 select-none font-bold">
+                  👩‍👦
+                </div>
+                <h3 className="font-extrabold text-lg text-gray-850">Akun Orang Tua</h3>
+                <p className="text-xs font-semibold text-gray-400 mt-2.5 leading-relaxed">
+                  Pantau progres anak secara real-time tanpa harus duduk mendampingi. Laporan lengkap dari AI dan catatan langsung ustadz tersedia di genggaman.
+                </p>
+
+                {/* Key Features bullet points list */}
+                <div className="mt-4 pt-4 border-t border-gray-100/60">
+                  <span className="text-[10px] font-black text-gray-450 uppercase tracking-widest block mb-2">Fitur Kunci:</span>
+                  <p className="text-[11px] font-bold text-gray-500 leading-relaxed">
+                    Laporan progres real-time · Catatan ustadz · Unduh worksheet cetak · PIN keamanan dasbor
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <Link
+                  href="/login"
+                  className="w-full bg-[#06B6D4] hover:bg-[#0891B2] text-white font-extrabold text-center block py-3 rounded-2xl border-b-4 border-[#0e7490] active:border-b-0 active:translate-y-1 transition-all text-xs sm:text-sm shadow-sm"
+                >
+                  Coba sebagai Orang Tua ➔
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Card 3: Ustadz */}
+            <motion.div
+              variants={roleCardVariants}
+              className="bg-white border-3 border-amber-400 rounded-[32px] p-6 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-20 h-20 bg-amber-400/5 rounded-full filter blur-lg pointer-events-none" />
+              <div>
+                <div className="w-14 h-14 rounded-2xl bg-amber-100 text-amber-850 border-2 border-amber-250 flex items-center justify-center text-3xl shadow-sm mb-6 select-none font-bold">
+                  🎓
+                </div>
+                <h3 className="font-extrabold text-lg text-gray-850">Akun Ustadz</h3>
+                <p className="text-xs font-semibold text-gray-400 mt-2.5 leading-relaxed">
+                  Kelola jadwal mengajar, evaluasi santri, dan rekap absensi dalam satu dasbor. AI membantu merancang jalur belajar personal tiap santri.
+                </p>
+
+                {/* Key Features bullet points list */}
+                <div className="mt-4 pt-4 border-t border-gray-100/60">
+                  <span className="text-[10px] font-black text-gray-450 uppercase tracking-widest block mb-2">Fitur Kunci:</span>
+                  <p className="text-[11px] font-bold text-gray-500 leading-relaxed">
+                    Jadwal &amp; booking kelas · Absensi dinamis · Form evaluasi santri · AI Learning Path Generator
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <Link
+                  href="/login"
+                  className="w-full bg-[#F59E0B] hover:bg-[#D97706] text-white font-extrabold text-center block py-3 rounded-2xl border-b-4 border-[#B45309] active:border-b-0 active:translate-y-1 transition-all text-xs sm:text-sm shadow-sm"
+                >
+                  Coba sebagai Ustadz ➔
+                </Link>
+                <Link
+                  href="/guru/register"
+                  className="text-[11px] font-black text-[#D97706] hover:underline text-center block mt-3"
+                >
+                  Tertarik Mengajar? Daftar Jadi Ustadz ➔
+                </Link>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* 3. HOW IT WORKS */}
       <section id="cara-kerja" className="py-20 px-4 sm:px-6 bg-islamic-pattern">
         <div className="max-w-5xl mx-auto text-center">
@@ -213,81 +376,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 4. FEATURES */}
-      <section id="fitur" className="py-20 px-4 sm:px-6 bg-white border-y-3 border-neutral-border">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs sm:text-sm font-extrabold text-secondary-dark bg-secondary-light/60 border border-secondary/20 px-4 py-1.5 rounded-full inline-block">
-              FITUR UNGGULAN
-            </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-800 mt-3">
-              Fitur yang Membuat Belajar Ngaji Lebih Menyenangkan
-            </h2>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Feature 1 */}
-            <FadeIn delay={0.1} direction="up">
-              <div className="bg-neutral-warm/30 border-3 border-neutral-border rounded-3xl p-6 hover:border-primary transition-all duration-300 flex items-start gap-4">
-                <div className="bg-primary/10 border border-primary/20 p-3 rounded-2xl text-primary-dark">
-                  <Brain size={24} className="stroke-[2.5]" />
-                </div>
-                <div>
-                  <h3 className="font-extrabold text-lg text-gray-800">AI Learning Path</h3>
-                  <p className="text-sm font-semibold text-gray-500 mt-1 leading-relaxed">
-                    Menganalisis intonasi dan tajwid anak secara real-time. Memberikan latihan koreksi pelafalan secara langsung tanpa membuat anak berkecil hati.
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-
-            {/* Feature 2 */}
-            <FadeIn delay={0.2} direction="up">
-              <div className="bg-neutral-warm/30 border-3 border-neutral-border rounded-3xl p-6 hover:border-primary transition-all duration-300 flex items-start gap-4">
-                <div className="bg-amber-50 border border-secondary/20 p-3 rounded-2xl text-secondary-dark">
-                  <Shield size={24} className="stroke-[2.5]" />
-                </div>
-                <div>
-                  <h3 className="font-extrabold text-lg text-gray-800">Guru Terverifikasi</h3>
-                  <p className="text-sm font-semibold text-gray-500 mt-1 leading-relaxed">
-                    Pengajar adalah alumni pesantren terkemuka yang telah melalui seleksi ketat dan pelatihan kurikulum edukasi psikologi anak dasar.
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-
-            {/* Feature 3 */}
-            <FadeIn delay={0.3} direction="up">
-              <div className="bg-neutral-warm/30 border-3 border-neutral-border rounded-3xl p-6 hover:border-primary transition-all duration-300 flex items-start gap-4">
-                <div className="bg-purple-50 border border-accent/20 p-3 rounded-2xl text-accent-dark">
-                  <Gamepad2 size={24} className="stroke-[2.5]" />
-                </div>
-                <div>
-                  <h3 className="font-extrabold text-lg text-gray-800">Gamifikasi Islami</h3>
-                  <p className="text-sm font-semibold text-gray-500 mt-1 leading-relaxed">
-                    Sistem naik level, koin yang bisa ditukar dengan kustomisasi avatar, lencana penghargaan hafalan surah, dan papan peringkat harian yang ramah anak.
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-
-            {/* Feature 4 */}
-            <FadeIn delay={0.4} direction="up">
-              <div className="bg-neutral-warm/30 border-3 border-neutral-border rounded-3xl p-6 hover:border-primary transition-all duration-300 flex items-start gap-4">
-                <div className="bg-emerald-50 border border-primary/20 p-3 rounded-2xl text-primary-dark">
-                  <TrendingUp size={24} className="stroke-[2.5]" />
-                </div>
-                <div>
-                  <h3 className="font-extrabold text-lg text-gray-800">Progress Report Orang Tua</h3>
-                  <p className="text-sm font-semibold text-gray-500 mt-1 leading-relaxed">
-                    Akses dashboard khusus orang tua untuk melihat grafik akurasi tajwid anak, laporan pertemuan guru, dan notifikasi kelulusan modul anak.
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
 
       {/* 5. TESTIMONIALS */}
       <section className="py-20 px-4 bg-islamic-pattern">
@@ -420,7 +509,7 @@ export default function LandingPage() {
                   <span className="text-gray-400 font-bold ml-2">/ bulan</span>
                 </div>
                 <p className="text-sm font-semibold text-gray-400 mt-2">
-                  Komitmen penuh bimbingan tatap muka guru ngaji dan analitik tajwid tanpa batas.
+                  Komitmen penuh bimbingan tatap muka Ustadz dan analitik tajwid tanpa batas.
                 </p>
 
                 <div className="mt-8 border-t border-gray-100 pt-6">
@@ -434,7 +523,7 @@ export default function LandingPage() {
                     </li>
                     <li className="flex items-center gap-2.5 text-sm font-bold text-gray-600">
                       <Check size={16} className="text-primary stroke-[3]" />
-                      4x Sesi Kelas Guru Privat (virtual) / bln
+                      4x Sesi Kelas Ustadz Privat (virtual) / bln
                     </li>
                     <li className="flex items-center gap-2.5 text-sm font-bold text-gray-600">
                       <Check size={16} className="text-primary stroke-[3]" />
@@ -457,6 +546,104 @@ export default function LandingPage() {
                 </Link>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6.5. DEWAN SYARIAH & PEMBAYARAN SYARIAH */}
+      <section className="py-20 px-4 sm:px-6 bg-emerald-50/10 border-b-3 border-neutral-border relative overflow-hidden">
+        {/* Floating Dewan Syariah Badge */}
+        <div className="absolute top-6 right-6 md:top-12 md:right-12 bg-amber-400 text-teal-950 border-2 border-amber-600 rounded-2xl px-3 py-2 text-xs font-black rotate-6 shadow-md flex items-center gap-1.5 z-10 select-none">
+          <Award size={16} className="text-teal-950 animate-bounce" />
+          <span>Ditinjau Dewan Syariah</span>
+        </div>
+
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="text-xs sm:text-sm font-extrabold text-[#4C9A84] bg-emerald-50 border border-emerald-250 px-4 py-1.5 rounded-full inline-block uppercase tracking-wider mb-3">
+              Kepatuhan Syariah
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-800 leading-tight">
+              Pembayaran Tenang, Sesuai Syariah
+            </h2>
+            <p className="text-sm font-semibold text-gray-450 mt-3 leading-relaxed">
+              Setiap transaksi di NgajiKidz menggunakan akad ijarah — akad jasa yang jelas, transparan, dan bebas dari unsur riba serta gharar.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+            {/* Point 1: Akad Ijarah yang Jelas */}
+            <div className="bg-white border-2 border-neutral-border rounded-3xl p-5 shadow-xs flex flex-col justify-between hover:border-primary transition-colors">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-primary/20 text-[#4C9A84] flex items-center justify-center mb-4">
+                  <FileText size={20} />
+                </div>
+                <h3 className="font-extrabold text-sm text-gray-850">Akad Ijarah yang Jelas</h3>
+                <p className="text-[11px] font-semibold text-gray-450 mt-2 leading-relaxed">
+                  Setiap pembayaran adalah akad sewa manfaat jasa pendidikan. Hak dan kewajiban kedua pihak jelas sejak awal, tidak ada biaya tersembunyi.
+                </p>
+              </div>
+            </div>
+
+            {/* Point 2: Bebas Riba & Gharar */}
+            <div className="bg-white border-2 border-neutral-border rounded-3xl p-5 shadow-xs flex flex-col justify-between hover:border-primary transition-colors">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-primary/20 text-[#4C9A84] flex items-center justify-center mb-4">
+                  <Shield size={20} />
+                </div>
+                <h3 className="font-extrabold text-sm text-gray-850">Bebas Riba &amp; Gharar</h3>
+                <p className="text-[11px] font-semibold text-gray-450 mt-2 leading-relaxed">
+                  Tidak ada bunga, tidak ada ketidakjelasan layanan. Anda tahu persis apa yang dibayar dan apa yang didapat.
+                </p>
+              </div>
+            </div>
+
+            {/* Point 3: Harga Transparan, Tidak Ada Biaya Kejutan */}
+            <div className="bg-white border-2 border-neutral-border rounded-3xl p-5 shadow-xs flex flex-col justify-between hover:border-primary transition-colors">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-primary/20 text-[#4C9A84] flex items-center justify-center mb-4">
+                  <Tag size={20} />
+                </div>
+                <h3 className="font-extrabold text-sm text-gray-850">Harga Transparan</h3>
+                <p className="text-[11px] font-semibold text-gray-450 mt-2 leading-relaxed">
+                  Harga tertera adalah harga final. Tidak ada biaya tambahan tersembunyi setelah pembayaran dikonfirmasi.
+                </p>
+              </div>
+            </div>
+
+            {/* Point 4: Pembatalan Adil Sesuai Ketentuan */}
+            <div className="bg-white border-2 border-neutral-border rounded-3xl p-5 shadow-xs flex flex-col justify-between hover:border-primary transition-colors">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-primary/20 text-[#4C9A84] flex items-center justify-center mb-4">
+                  <RotateCcw size={20} />
+                </div>
+                <h3 className="font-extrabold text-sm text-gray-850">Pembatalan Adil</h3>
+                <p className="text-[11px] font-semibold text-gray-450 mt-2 leading-relaxed">
+                  Kebijakan pembatalan dan refund mengikuti prinsip keadilan Islam — proporsional terhadap layanan yang sudah dinikmati.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Payment Methods Info */}
+          <div className="mt-16 text-center border-t border-gray-150 pt-8 flex flex-col items-center gap-4">
+            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">Didukung oleh:</span>
+            
+            {/* Payment Chips */}
+            <div className="flex flex-wrap items-center justify-center gap-2 text-[10px] font-black text-gray-500">
+              <span className="bg-white border border-neutral-border px-3 py-1.5 rounded-xl shadow-xs">QRIS</span>
+              <span className="bg-white border border-neutral-border px-3 py-1.5 rounded-xl shadow-xs">GoPay</span>
+              <span className="bg-white border border-neutral-border px-3 py-1.5 rounded-xl shadow-xs">OVO</span>
+              <span className="bg-white border border-neutral-border px-3 py-1.5 rounded-xl shadow-xs">Dana</span>
+              <span className="bg-white border border-neutral-border px-3 py-1.5 rounded-xl shadow-xs">BCA Virtual Account</span>
+              <span className="bg-white border border-neutral-border px-3 py-1.5 rounded-xl shadow-xs">Mandiri Virtual Account</span>
+              <span className="bg-white border border-neutral-border px-3 py-1.5 rounded-xl shadow-xs">BRI Virtual Account</span>
+            </div>
+
+            {/* Midtrans Footnote */}
+            <p className="text-[10px] font-semibold text-gray-400 mt-2 leading-relaxed max-w-md">
+              Diproses secara aman oleh Midtrans. NgajiKidz tidak menyimpan data kartu atau rekening Anda.
+            </p>
           </div>
         </div>
       </section>

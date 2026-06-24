@@ -65,7 +65,7 @@ export default function TeacherSchedulePage() {
 
   const handleToggleBlock = (hour: { id: string; booked: boolean; blocked: boolean; time: string }) => {
     if (hour.booked) {
-      alert("Jam ini sudah di-booking siswa. Batalkan booking terlebih dahulu!");
+      alert("Jam ini sudah di-booking santri. Batalkan booking terlebih dahulu!");
       return;
     }
     
@@ -199,14 +199,14 @@ export default function TeacherSchedulePage() {
           <div className="bg-white border-3 border-neutral-border rounded-[32px] p-6 shadow-sm">
             <h3 className="text-base font-black text-gray-800 mb-4 flex items-center gap-2">
               <Video size={18} className="text-primary" />
-              Siswa Terjadwal Mengaji ({activeTabDay})
+              Santri Terjadwal Mengaji ({activeTabDay})
             </h3>
 
             {bookings.filter((b) => b.day === activeTabDay).length === 0 ? (
               <div className="py-12 text-center text-gray-400 flex flex-col items-center justify-center">
                 <AlertCircle size={40} className="text-gray-300 mb-2" />
                 <p className="text-xs font-bold text-gray-500">Tidak ada jadwal booking hari ini.</p>
-                <p className="text-[10px] font-semibold text-gray-400 mt-1">Siswa dapat melakukan booking pada jam aktif Anda yang kosong.</p>
+                <p className="text-[10px] font-semibold text-gray-400 mt-1">Santri dapat melakukan booking pada jam aktif Anda yang kosong.</p>
               </div>
             ) : (
               <div className="flex flex-col gap-4">

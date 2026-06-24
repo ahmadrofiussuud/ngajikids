@@ -12,6 +12,7 @@ export default function Navbar() {
 
   const navigationItems = [
     { name: "Beranda", href: "/" },
+    { name: "Sistem Peran", href: "/multi-role" },
     { name: "Tentang Kami", href: "/tentang-kami" },
     { name: "Daftar Ustadz", href: "/ustadz" },
     { name: "Blog", href: "/blog" },

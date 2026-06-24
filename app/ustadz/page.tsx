@@ -67,13 +67,21 @@ export default function PublicTeachersListPage() {
               Daftar Ustadz &amp; Ustazah NgajiKidz
             </h1>
             <p className="text-xs sm:text-sm font-semibold text-gray-400 mt-1">
-              Bimbingan intensif personal secara virtual dengan guru ngaji tersertifikasi ramah anak.
+              Bimbingan intensif personal secara virtual dengan Ustadz tersertifikasi ramah anak.
             </p>
           </div>
           
-          <div className="bg-white border-2 border-neutral-border px-4 py-2.5 rounded-2xl shadow-sm text-right shrink-0">
-            <span className="text-xs font-bold text-gray-400">Total Pengajar Pilihan</span>
-            <p className="text-sm font-black text-primary-dark">{filteredTeachers.length} Guru Aktif</p>
+          <div className="flex items-center gap-3 shrink-0 self-start sm:self-center">
+            <div className="bg-white border-2 border-neutral-border px-4 py-2.5 rounded-2xl shadow-sm text-right">
+              <span className="text-xs font-bold text-gray-400">Total Pengajar Pilihan</span>
+              <p className="text-sm font-black text-primary-dark">{filteredTeachers.length} Ustadz Aktif</p>
+            </div>
+            <Link
+              href="/guru/register"
+              className="bg-primary hover:bg-primary-dark text-white font-extrabold text-xs sm:text-sm py-3 px-5 rounded-2xl border-b-4 border-primary-dark active:border-b-0 active:translate-y-[2px] transition-all shadow-md flex items-center gap-1.5"
+            >
+              <span>Bergabung Jadi Ustadz ➔</span>
+            </Link>
           </div>
         </div>
 
