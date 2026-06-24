@@ -108,11 +108,16 @@ export default function LoginPage() {
 
         {/* Brand Logo & Greeting */}
         <div className="flex flex-col items-center text-center mb-6 relative z-10">
-          <img
-            src="/images/logongajikids.png"
-            alt="NgajiKidz Logo"
-            className="h-12 w-auto object-contain mb-3"
-          />
+          <div className="flex items-center gap-2 mb-3">
+            <img
+              src="/images/logongajikids.png"
+              alt="NgajiKidz Logo"
+              className="h-10 w-auto object-contain"
+            />
+            <span className="font-extrabold text-2xl tracking-tight text-primary-dark">
+              Ngaji<span className="text-secondary">Kidz</span>
+            </span>
+          </div>
           <p className="text-sm font-bold text-gray-400 mt-1">
             Masuk ke gerbang petualangan mengaji Al-Qur'an!
           </p>

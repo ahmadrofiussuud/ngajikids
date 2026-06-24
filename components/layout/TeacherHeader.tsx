@@ -33,6 +33,9 @@ export default function TeacherHeader() {
               alt="NgajiKidz Logo"
               className="h-9 w-auto object-contain"
             />
+            <span className="font-extrabold text-lg sm:text-xl tracking-tight text-primary-dark">
+              Ngaji<span className="text-secondary">Kidz</span>
+            </span>
             <span className="bg-emerald-100 text-emerald-700 text-[9px] font-black px-2.5 py-0.5 rounded-full border border-emerald-250">
               USTADZ
             </span>

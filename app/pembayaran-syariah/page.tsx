@@ -54,12 +54,15 @@ export default function PembayaranSyariahPage() {
       {/* Top Navbar */}
       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-3 border-neutral-border py-4 px-4 sm:px-8 shadow-sm">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center active:scale-95 transition-all">
+          <Link href="/" className="flex items-center gap-2 active:scale-95 transition-all">
             <img
               src="/images/logongajikids.png"
               alt="NgajiKidz Logo"
               className="h-9 w-auto object-contain"
             />
+            <span className="font-extrabold text-xl tracking-tight text-primary-dark">
+              Ngaji<span className="text-secondary">Kidz</span>
+            </span>
           </Link>
           <Link
             href="/"
