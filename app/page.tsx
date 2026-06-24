@@ -61,6 +61,8 @@ export default function LandingPage() {
   // States for interactive components
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const [kelompokPlan, setKelompokPlan] = useState<"tahsin" | "tahfidz" | "hafidz">("tahsin");
+  const [privatPlan, setPrivatPlan] = useState<"tasmi" | "talaqqi" | "mutqin">("talaqqi");
 
   // FAQ Accordion Data
   const faqs = [
@@ -427,8 +429,8 @@ export default function LandingPage() {
 
       {/* 6. PRICING SECTION */}
       <section id="harga" className="py-20 px-4 sm:px-6 bg-white border-y-3 border-neutral-border">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-12">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="text-xs sm:text-sm font-extrabold text-primary-dark bg-primary-light/50 border border-primary/20 px-4 py-1.5 rounded-full inline-block">
               PILIHAN PAKET LANGGANAN
             </span>
@@ -436,47 +438,56 @@ export default function LandingPage() {
               Investasi Terbaik untuk Masa Depan Akhirat Anak
             </h2>
             
-            {/* Syar'i Akad Framing Alert Box */}
-            <div className="bg-amber-50 border border-secondary/25 p-3 rounded-2xl mt-4 flex items-center justify-center gap-2 max-w-lg mx-auto">
-              <Award size={16} className="text-secondary" />
-              <span className="text-xs font-bold text-secondary-dark leading-tight">
-                Menggunakan Akad Ijarah (Sewa Jasa Pengajaran) yang Syar'i dan Transparan.
-              </span>
+            {/* Syar'i Akad Framing & Transparency Alert Box */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6 max-w-3xl mx-auto">
+              <div className="bg-amber-50 border border-secondary/25 p-3 rounded-2xl flex items-center justify-center gap-2 flex-1">
+                <Award size={16} className="text-secondary shrink-0" />
+                <span className="text-xs font-bold text-secondary-dark leading-tight text-left">
+                  Menggunakan Akad Ijarah (Sewa Jasa Pengajaran) yang Syar'i dan Transparan.
+                </span>
+              </div>
+              <div className="bg-emerald-50 border border-primary/20 p-3 rounded-2xl flex items-center justify-center gap-2 flex-1">
+                <Shield size={16} className="text-primary-dark shrink-0" />
+                <span className="text-xs font-bold text-primary-dark leading-tight text-left">
+                  Transparan: Platform menerima fee 15% untuk operasional, 85% disalurkan langsung sebagai ujrah Ustadz.
+                </span>
+              </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto items-stretch">
-            {/* Tier 1: Gratis */}
-            <div className="bg-white border-3 border-neutral-border rounded-3xl p-8 flex flex-col justify-between shadow-sm relative">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
+            {/* Card 1: Gratis */}
+            <div className="bg-white border-3 border-neutral-border rounded-3xl p-6 flex flex-col justify-between shadow-sm relative text-left">
               <div>
-                <span className="text-xs font-extrabold uppercase bg-gray-100 text-gray-500 px-3 py-1 rounded-full">
-                  Basic (Gratis)
+                <span className="text-[10px] font-black uppercase bg-gray-100 text-gray-500 px-3 py-1 rounded-full border border-gray-200">
+                  Belajar Mandiri
                 </span>
-                <div className="mt-4 flex items-baseline text-gray-800 font-extrabold">
+                <h3 className="font-extrabold text-xl text-gray-850 mt-4">Paket Gratis</h3>
+                <div className="mt-3 flex items-baseline text-gray-800 font-extrabold">
                   <span className="text-2xl">Rp</span>
                   <span className="text-5xl">0</span>
                   <span className="text-gray-400 font-bold ml-2">/ selamanya</span>
                 </div>
-                <p className="text-sm font-semibold text-gray-400 mt-2">
-                  Cocok untuk mencoba metode gamifikasi dan evaluasi awal AI.
+                <p className="text-xs font-semibold text-gray-400 mt-2 leading-relaxed">
+                  Santri dapat belajar secara mandiri, melatih makhraj huruf dasar, dan mencoba petualangan awal.
                 </p>
 
-                <div className="mt-8 border-t border-gray-100 pt-6">
-                  <h4 className="font-extrabold text-sm text-gray-800 uppercase tracking-wider mb-4">
+                <div className="mt-6 border-t border-gray-100 pt-5">
+                  <h4 className="font-extrabold text-xs text-gray-800 uppercase tracking-wider mb-3">
                     Fitur yang didapatkan:
                   </h4>
-                  <ul className="flex flex-col gap-3">
-                    <li className="flex items-center gap-2.5 text-sm font-bold text-gray-600">
-                      <Check size={16} className="text-primary stroke-[3]" />
-                      Akses modul Iqra 1 &amp; 2
+                  <ul className="flex flex-col gap-2.5">
+                    <li className="flex items-center gap-2 text-xs font-bold text-gray-600">
+                      <Check size={14} className="text-primary stroke-[3]" />
+                      Akses Modul Iqra 1, 2, &amp; 3
                     </li>
-                    <li className="flex items-center gap-2.5 text-sm font-bold text-gray-600">
-                      <Check size={16} className="text-primary stroke-[3]" />
-                      Deteksi Makhorijul Huruf AI (10x / hari)
+                    <li className="flex items-center gap-2 text-xs font-bold text-gray-600">
+                      <Check size={14} className="text-primary stroke-[3]" />
+                      Deteksi Makhraj AI Dasar (10x/hari)
                     </li>
-                    <li className="flex items-center gap-2.5 text-sm font-bold text-gray-600">
-                      <Check size={16} className="text-primary stroke-[3]" />
-                      Buat 1 Kustomisasi Avatar
+                    <li className="flex items-center gap-2 text-xs font-bold text-gray-600">
+                      <Check size={14} className="text-primary stroke-[3]" />
+                      Sistem Gamifikasi &amp; 1 Kustom Avatar
                     </li>
                   </ul>
                 </div>
@@ -485,53 +496,71 @@ export default function LandingPage() {
               <div className="mt-8">
                 <Link
                   href="/login"
-                  className="w-full bg-white hover:bg-gray-50 text-gray-700 font-extrabold text-center block py-3 rounded-2xl border-2 border-neutral-border shadow-sm transition-all"
+                  className="w-full bg-white hover:bg-gray-50 text-gray-700 font-extrabold text-center block py-3 rounded-2xl border-2 border-neutral-border shadow-sm transition-all text-xs"
                 >
-                  Mulai Gratis
+                  Mulai Belajar Gratis
                 </Link>
               </div>
             </div>
 
-            {/* Tier 2: Premium */}
-            <div className="bg-white border-3 border-primary rounded-3xl p-8 flex flex-col justify-between shadow-md relative overflow-hidden">
-              {/* Popular Badge */}
-              <div className="absolute top-0 right-0 bg-primary text-white font-black text-[10px] uppercase tracking-wider py-1.5 px-5 rounded-bl-2xl">
-                Paling Diminati ⭐
-              </div>
-
+            {/* Card 2: B2C Kelompok */}
+            <div className="bg-white border-3 border-secondary rounded-3xl p-6 flex flex-col justify-between shadow-sm relative text-left">
+              <span className="absolute -top-3.5 left-6 bg-secondary text-white font-black text-[9px] px-3 py-1 rounded-full border border-secondary-dark uppercase tracking-wider">
+                5-6 Santri per Kelas
+              </span>
               <div>
-                <span className="text-xs font-extrabold uppercase bg-primary-light text-primary-dark px-3 py-1 rounded-full">
-                  Premium
+                <span className="text-[10px] font-black uppercase bg-amber-50 text-secondary-dark px-3 py-1 rounded-full border border-secondary/20">
+                  Kelas Kelompok (2 Jam)
                 </span>
+                
+                {/* Dynamic Price Display */}
                 <div className="mt-4 flex items-baseline text-gray-800 font-extrabold">
                   <span className="text-2xl">Rp</span>
-                  <span className="text-5xl">149K</span>
+                  <span className="text-5xl">
+                    {kelompokPlan === "tahsin" ? "49K" : kelompokPlan === "tahfidz" ? "89K" : "139K"}
+                  </span>
                   <span className="text-gray-400 font-bold ml-2">/ bulan</span>
                 </div>
-                <p className="text-sm font-semibold text-gray-400 mt-2">
-                  Komitmen penuh bimbingan tatap muka Ustadz dan analitik tajwid tanpa batas.
-                </p>
 
-                <div className="mt-8 border-t border-gray-100 pt-6">
-                  <h4 className="font-extrabold text-sm text-gray-800 uppercase tracking-wider mb-4">
-                    Semua Fitur Basic + Tambahan:
-                  </h4>
-                  <ul className="flex flex-col gap-3">
-                    <li className="flex items-center gap-2.5 text-sm font-bold text-gray-600">
-                      <Check size={16} className="text-primary stroke-[3]" />
-                      Analisis AI tanpa batas (Seluruh Surah)
+                {/* Sub Plan Selector */}
+                <div className="bg-gray-50 border border-gray-150 p-1 rounded-xl flex gap-1 mt-4">
+                  {(["tahsin", "tahfidz", "hafidz"] as const).map((plan) => (
+                    <button
+                      key={plan}
+                      onClick={() => setKelompokPlan(plan)}
+                      className={`flex-1 text-center py-1.5 rounded-lg text-[10px] font-black capitalize transition-all ${
+                        kelompokPlan === plan
+                          ? "bg-secondary text-white shadow-xs"
+                          : "text-gray-400 hover:bg-gray-100"
+                      }`}
+                    >
+                      {plan}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="mt-5 border-t border-gray-100 pt-4">
+                  <div className="flex justify-between items-center text-[10px] font-black text-secondary-dark uppercase tracking-wider mb-3">
+                    <span>Sesi Pertemuan:</span>
+                    <span>
+                      {kelompokPlan === "tahsin" ? "4 Sesi / Bln" : kelompokPlan === "tahfidz" ? "8 Sesi / Bln" : "12 Sesi / Bln"}
+                    </span>
+                  </div>
+
+                  <ul className="flex flex-col gap-2.5">
+                    <li className="flex items-center gap-2 text-xs font-bold text-gray-600">
+                      <Check size={14} className="text-secondary stroke-[3]" />
+                      Kelas interaktif (5-6 anak)
                     </li>
-                    <li className="flex items-center gap-2.5 text-sm font-bold text-gray-600">
-                      <Check size={16} className="text-primary stroke-[3]" />
-                      4x Sesi Kelas Ustadz Privat (virtual) / bln
+                    <li className="flex items-center gap-2 text-xs font-bold text-gray-600">
+                      <Check size={14} className="text-secondary stroke-[3]" />
+                      Durasi panjang 2 jam per sesi
                     </li>
-                    <li className="flex items-center gap-2.5 text-sm font-bold text-gray-600">
-                      <Check size={16} className="text-primary stroke-[3]" />
-                      Dashboard evaluasi tajwid AI orang tua
-                    </li>
-                    <li className="flex items-center gap-2.5 text-sm font-bold text-gray-600">
-                      <Check size={16} className="text-primary stroke-[3]" />
-                      Bebas Iklan &amp; Akses Lencana Spesial
+                    <li className="flex items-center gap-2 text-xs font-bold text-gray-600">
+                      <Check size={14} className="text-secondary stroke-[3]" />
+                      {kelompokPlan === "tahsin" && "Tahsin: Fokus makhraj & hukum tajwid lisan"}
+                      {kelompokPlan === "tahfidz" && "Tahfidz: Setoran hafalan baru & murajaah"}
+                      {kelompokPlan === "hafidz" && "Hafidz: Pengulangan intensif juz 30 & surah"}
                     </li>
                   </ul>
                 </div>
@@ -540,9 +569,82 @@ export default function LandingPage() {
               <div className="mt-8">
                 <Link
                   href="/login"
-                  className="w-full bg-primary hover:bg-primary-dark text-white font-extrabold text-center block py-3.5 rounded-2xl border-b-4 border-primary-dark active:border-b-0 active:translate-y-1 transition-all shadow-md"
+                  className="w-full bg-secondary hover:bg-secondary-dark text-white font-extrabold text-center block py-3 rounded-2xl border-b-4 border-secondary-dark active:border-b-0 active:translate-y-1 transition-all text-xs shadow-md"
                 >
-                  Langganan Premium
+                  Pilih Paket Kelompok
+                </Link>
+              </div>
+            </div>
+
+            {/* Card 3: B2C Privat */}
+            <div className="bg-white border-3 border-primary rounded-3xl p-6 flex flex-col justify-between shadow-md relative text-left overflow-hidden">
+              <div className="absolute top-0 right-0 bg-primary text-white font-black text-[9px] uppercase tracking-wider py-1 px-4 rounded-bl-2xl">
+                Eksklusif 1-on-1 ⭐
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase bg-primary-light text-primary-dark px-3 py-1 rounded-full border border-primary/20">
+                  Kelas Privat (1 Jam)
+                </span>
+                
+                {/* Dynamic Price Display */}
+                <div className="mt-4 flex items-baseline text-gray-800 font-extrabold">
+                  <span className="text-2xl">Rp</span>
+                  <span className="text-5xl">
+                    {privatPlan === "tasmi" ? "109K" : privatPlan === "talaqqi" ? "199K" : "289K"}
+                  </span>
+                  <span className="text-gray-400 font-bold ml-2">/ bulan</span>
+                </div>
+
+                {/* Sub Plan Selector */}
+                <div className="bg-gray-50 border border-gray-150 p-1 rounded-xl flex gap-1 mt-4">
+                  {(["tasmi", "talaqqi", "mutqin"] as const).map((plan) => (
+                    <button
+                      key={plan}
+                      onClick={() => setPrivatPlan(plan)}
+                      className={`flex-1 text-center py-1.5 rounded-lg text-[10px] font-black capitalize transition-all ${
+                        privatPlan === plan
+                          ? "bg-primary text-white shadow-xs"
+                          : "text-gray-450 hover:bg-gray-100"
+                      }`}
+                    >
+                      {plan === "tasmi" ? "Tasmi'" : plan === "talaqqi" ? "Talaqqi" : "Mutqin"}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="mt-5 border-t border-gray-100 pt-4">
+                  <div className="flex justify-between items-center text-[10px] font-black text-primary-dark uppercase tracking-wider mb-3">
+                    <span>Sesi Pertemuan:</span>
+                    <span>
+                      {privatPlan === "tasmi" ? "4 Sesi / Bln" : privatPlan === "talaqqi" ? "8 Sesi / Bln" : "12 Sesi / Bln"}
+                    </span>
+                  </div>
+
+                  <ul className="flex flex-col gap-2.5">
+                    <li className="flex items-center gap-2 text-xs font-bold text-gray-600">
+                      <Check size={14} className="text-primary stroke-[3]" />
+                      Belajar privat 1 anak bersama 1 Ustadz
+                    </li>
+                    <li className="flex items-center gap-2 text-xs font-bold text-gray-600">
+                      <Check size={14} className="text-primary stroke-[3]" />
+                      Bebas booking jadwal &amp; Ustadz pilihan
+                    </li>
+                    <li className="flex items-center gap-2 text-xs font-bold text-gray-600">
+                      <Check size={14} className="text-primary stroke-[3]" />
+                      {privatPlan === "tasmi" && "Tasmi': Menyimak setoran hafalan santri secara jeli"}
+                      {privatPlan === "talaqqi" && "Talaqqi: Tatap muka face-to-face makhraj & kelancaran"}
+                      {privatPlan === "mutqin" && "Mutqin: Target hafalan kuat & murajaah melekat kuat"}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-8">
+                <Link
+                  href="/login"
+                  className="w-full bg-primary hover:bg-primary-dark text-white font-extrabold text-center block py-3 rounded-2xl border-b-4 border-primary-dark active:border-b-0 active:translate-y-1 transition-all text-xs shadow-md"
+                >
+                  Pilih Paket Privat
                 </Link>
               </div>
             </div>
