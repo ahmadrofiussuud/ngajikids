@@ -108,12 +108,11 @@ export default function LoginPage() {
 
         {/* Brand Logo & Greeting */}
         <div className="flex flex-col items-center text-center mb-6 relative z-10">
-          <div className="bg-primary p-2.5 rounded-2xl border-2 border-primary-dark shadow-sm mb-3">
-            <Sparkles className="text-white w-6 h-6 animate-pulse" />
-          </div>
-          <h1 className="font-extrabold text-2xl tracking-tight text-primary-dark">
-            Ngaji<span className="text-secondary">Kidz</span>
-          </h1>
+          <img
+            src="/images/logongajikids.png"
+            alt="NgajiKidz Logo"
+            className="h-12 w-auto object-contain mb-3"
+          />
           <p className="text-sm font-bold text-gray-400 mt-1">
             Masuk ke gerbang petualangan mengaji Al-Qur'an!
           </p>
